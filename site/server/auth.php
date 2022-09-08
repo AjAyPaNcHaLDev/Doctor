@@ -20,6 +20,7 @@ if (mysqli_num_rows($sql)==0) {
 		$_SESSION['id']=$user['id'];
 		$_SESSION['type']=$user['type'];
         $_SESSION['session_status']=true;
+		$_SESSION['Executive']="3002";
 		header("location:../Dashboard.php");
 	}
 }

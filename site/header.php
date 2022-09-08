@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+
+?>
+
+
 <!-- ===== Top-Navigation ===== -->
 
 
@@ -212,9 +219,9 @@
                             <a class="waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> Dashboard </span></a>
                             <ul aria-expanded="false" class="collapse">
                             <li> <a href="Dashboard.php">Dashboard</a> </li>
-                                <li> <a href="addUser.php">Add User</a> </li>
-                                <li> <a href="index2.html">Clean Version</a> </li>
-                                <li> <a href="index3.html">Analytical Version</a> </li>
+                              <?php if($_SESSION['type']=="Admin")echo'  <li> <a href="addAdmin.php">Add Admin</a> </li>'?>
+                                <li> <a href="addExecutive.php">Add Executive</a> </li>
+                                <li> <a href="addDoctor.php">Add Doctor</a> </li>
                                 <li>
                                     <a class="waves-effect" href="javascript:void(0);" aria-expanded="false"><span class="hide-menu"> eCommerce </span></a>
                                     <ul aria-expanded="false" class="collapse">

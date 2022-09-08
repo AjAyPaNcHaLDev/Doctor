@@ -27,6 +27,8 @@
 if(isset($_SESSION["session_status"]))
 if($_SESSION["session_status"]){
     echo"ok";
+
+echo $_SESSION['type'];
 }else{
     echo" yah not ok";
 }
