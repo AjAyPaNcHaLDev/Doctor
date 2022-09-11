@@ -4,7 +4,7 @@ include "conn.php";
 
  function getAdminTable()
 {
-     $sql = "SELECT * FROM admin ";
+     $sql = "SELECT * FROM admin  ORDER BY id DESC";
 $myarray=array();
 $data=mysqli_query($GLOBALS['conn'],$sql);
 while($row=mysqli_fetch_assoc($data)){

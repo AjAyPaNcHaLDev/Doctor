@@ -107,37 +107,33 @@ else echo"not ok";
     <!-- vvvvvvvvvvv -->
     <div class="col-sm-8">
         <div class="white-box">
-            <h3 class="box-title m-b-0">Data Export</h3>
-            <p class="text-muted m-b-30">Export data to Copy, CSV, Excel, PDF & Print</p>
             <div class="table-responsive">
                 <table id="example23" class="display nowrap" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>Serial No</th>
                             <th>ID</th>
                             <th>Type</th>
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Email</th>
-                            <th>Password</th>
                             <th>Status</th>
                             <th>Date</th>
+                             <th>Edit</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Serial No</th>
                             <th>ID</th>
                             <th>Type</th>
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Email</th>
-                            <th>Password</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Edit</th>
                         </tr>
                     </tfoot>
-                    <tbody id="tableBody">
+                    <tbody >
                        
                     </tbody>
                 </table>
@@ -198,52 +194,6 @@ Required JS Files
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 
-<script>
-    $(function() {
-        $('#myTable').DataTable();
-
-        var table = $('#example').DataTable({
-            "columnDefs": [{
-                "visible": false,
-                "targets": 2
-            }],
-            "order": [
-                [2, 'asc']
-            ],
-            "displayLength": 25,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-                api.column(2, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
-                        last = group;
-                    }
-                });
-            }
-        });
-        // Order by the grouping
-        $('#example tbody').on('click', 'tr.group', function() {
-            var currentOrder = table.order()[0];
-            if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-                table.order([2, 'desc']).draw();
-            } else {
-                table.order([2, 'asc']).draw();
-            }
-        });
-    });
-    $('#example23').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-    </script>
         <script src="../plugins/components/styleswitcher/jQuery.style.switcher.js"></script>
 </body>
 
@@ -284,7 +234,8 @@ data="insertAdmin="+JSON.stringify({name,email,phone,password,type,status});
 	  	{
 	    	if (xhr.readyState == 4 && xhr.status == 200)
 	    	{
-	      		console.log(xhr.responseText);
+	      		
+fatchAdmins();
 }
 	  	};
 xhr.onprogress = function(event) {
@@ -295,40 +246,141 @@ xhr.onerror = function() {
 };
 
 }
-  
- 
+
 function fatchAdmins(){
  
  let xhr=new XMLHttpRequest();
  xhr.open('POST','server/api.php',true);
  xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
- data="callApi="+JSON.stringify("{table:getAdminTable}");
+ req="callApi="+JSON.stringify("{table:getAdminTable}");
  xhr.onreadystatechange = function()
        {
-         tbody=document.getElementById("tableBody");
          if (xhr.readyState == 4 && xhr.status == 200)
          {
-             result=JSON.parse(xhr.response);   
-             $("#tableBody").empty();
+            var data =JSON.parse(xhr.response);   
              i=0;
- result.forEach(element => {
-     $("#tableBody").append("<tr><td>"+i+"</td><td>"+element.id+"</td><td>"+element.type+"</td><td>"+element.name+"</td><td>"+element.phone+"</td><td>"+element.email+"</td><td>"+element.id+"</td><tr>");
-    //  tbody.innerHTML +=("<tr><td>"+i+"</td><td>"+element.id+"</td><td>"+element.type+"</td><td>"+element.name+"</td><td>"+element.phone+"</td><td>"+element.email+"</td><td>"+element.id+"</td><tr>");
- i++;
- });
+$('#example23').DataTable({
+    dom: 'Bfrtip',
+    "columnDefs": [{
+                "visible": true,
+                "targets": 2    
+            }],
+            
+            "displayLength": 20,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],"destroy": true,
+        "order": [
+                [0, 'dec']
+            ],
+    data:data
+    ,columns:[
+        {"data":"id"},
+        {"data":"type"},
+        {"data":"name"},
+        {"data":"phone"},
+        {"data":"email"},
+        {"data":"status"},
+        {"data":"date"},
+        {data: "id" , render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                '<button class="btn btn-warning" onClick="alert('+data+')"> Edit &nbsp<i class="icon-user "></i></button>' :
+                data;
+            }},
+    ]
+});
+
+
+//  result.forEach(element => {
+    // const row = document.createElement("tr");
+    // const serial = document.createElement("td");
+    // serial.appendChild(document.createTextNode(i));
+    // const type = document.createElement("td");
+    // type.appendChild(document.createTextNode(element.type));
+    // const name = document.createElement("td");
+    // name.appendChild(document.createTextNode(element.name));
+    // const phone = document.createElement("td");
+    // phone.appendChild(document.createTextNode(element.phone));
+    // const email = document.createElement("td");
+    // email.appendChild(document.createTextNode(element.email));
+    // const id = document.createElement("td");
+    // id.appendChild(document.createTextNode(element.id));
+    // const status = document.createElement("td");
+    // status.appendChild(document.createTextNode(element.status));
+    // const date = document.createElement("td");
+    // date.appendChild(document.createTextNode(element.date));
+    //     row.appendChild(serial)
+    //     row.appendChild(id);
+    //     row.appendChild(type)
+    //     row.appendChild(name)
+    //     row.appendChild(phone)
+    //     row.appendChild(email)
+    //     row.appendChild(status)
+    //     row.appendChild(date)
+       
+//     $("#tableBody").append(row);
+//     //  $("#tableBody").append("<tr><td>"+i+"</td><td>"+element.id+"</td><td>"+element.type+"</td><td>"+element.name+"</td><td>"+element.phone+"</td><td>"+element.email+"</td><td>"+element.id+"</td><tr>");
+//     //  tbody.innerHTML +=("<tr><td>"+i+"</td><td>"+element.id+"</td><td>"+element.type+"</td><td>"+element.name+"</td><td>"+element.phone+"</td><td>"+element.email+"</td><td>"+element.id+"</td><tr>");
+//  i++;
+//  });
+
  
          }
        };
-       xhr.send(data);
+       xhr.send(req);
        xhr.onprogress = function(event) {
  // alert("on progress");
  };
  xhr.onerror = function() {
  alert("Request failed");
  };
+
+// $('#myTable').DataTable({
+//     ajex:"server/api.php",
+//     type: 'POST',
+//     data:"callApi="+JSON.stringify("{table:getAdminTable}")
+//     ,columns:[
+//         {"data":"serial"},
+//         {"data":"id"},
+//         {"data":"type"},
+//         {"data":"name"},
+//         {"data":"phone"},
+//         {"data":"email"},
+//         {"data":"status"},
+//         {"data":"date"},
+//     ]
+// });
+// $('#example').DataTable({
+//         ajax: 'data/arrays.txt',
+//     });
+
+
+
+
+
  }
  
 
 
+
+ 
+
 fatchAdmins();
 </script>
+
+
+<script>
+    $(function() {
+        
+
+        $('#example23 tbody').on('click', 'tr.group', function() {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                table.order([2, 'desc']).draw();
+            } else {
+                table.order([2, 'asc']).draw();
+            }
+        });
+    });
+    
+    </script>

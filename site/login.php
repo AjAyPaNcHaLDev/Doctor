@@ -1,4 +1,3 @@
-<? session_destroy();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,9 +37,6 @@
             <div class="white-box">
                 <form class="form-horizontal form-material" id="loginform" method="post" action="./server/auth.php">
                     <h3 class="box-title m-b-20">Sign In</h3>
-                   
-                       
-                        
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input class="form-control" type="Email" required="true" placeholder="Email" name="Email">
@@ -48,7 +44,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="password" name="Password" required="true" placeholder="Password">
+                            <input class="form-control" type="password" name="Password" required="true"
+                                placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,7 +54,9 @@
                                 <input id="checkbox-signup" type="checkbox">
                                 <label for="checkbox-signup"> Remember me </label>
                             </div>
-                            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
+                            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i
+                                    class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+                        </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
@@ -67,7 +66,8 @@
                                 <option value="REGIONAL MANAGER">REGIONAL MANAGER</option>
                                 <option value="ASM">ASM</option>
                                 <option value="SALE-EXECUTIVE">SALE-EXECUTIVE </option>
-                            </select>  </div>
+                            </select>
+                        </div>
                     </div>
                     <?php
                         if(isset($_GET['msg'])){
@@ -82,7 +82,8 @@
                         ?>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" name="SignIn" type="submit">Sign In</button>
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
+                                name="SignIn" type="submit">Sign In</button>
                         </div>
                     </div>
                     <!-- <div class="row">
@@ -113,12 +114,13 @@
                     </div>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
+                            <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
+                                type="submit">Reset</button>
                         </div>
                     </div>
                 </form>
             </div>
-        
+
         </div>
     </section>
     <!-- jQuery -->
