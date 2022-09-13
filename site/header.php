@@ -43,10 +43,10 @@ if(!isset($_SESSION['session_status'])){
                 <div class="top-left-part">
                     <a class="logo" href="index.html">
                         <b>
-                            <img src="../plugins/images/logo.png" alt="home" />
+                            <img src="../plugins/images/logo.png" alt="home"  style="visibility:hidden"/>
                         </b>
                         <span>
-                            site name
+                        Savexa pharma
                         </span>
                     </a>
                 </div>
