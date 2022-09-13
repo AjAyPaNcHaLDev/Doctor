@@ -28,11 +28,11 @@
 
 if(isset($_SESSION["session_status"]))
 if($_SESSION["session_status"]){
-echo"ok";
+ 
 }else{
-echo" yah not ok";
+ header("location:login.php");
 }
-else echo"not ok";
+ 
 
 ?>
 
@@ -234,7 +234,7 @@ data="insertAdmin="+JSON.stringify({name,email,phone,password,type,status});
 	  	{
 	    	if (xhr.readyState == 4 && xhr.status == 200)
 	    	{
-	      		
+	      		alert(xhr.responseText);
 fatchAdmins();
 }
 	  	};

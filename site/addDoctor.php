@@ -70,11 +70,32 @@ else echo"not ok";
                         <input type="date" class="form-control" id="dob" name="dob" placeholder="01/01/1999"> </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label">Membership</label>
+                    <div class="radio-list">
+                        <label class="radio-inline p-0">
+                            <div class="radio radio-info">
+                                <input type="radio" name="radio" onchange="docType()" id="doctor" value="option1">
+                                <label for="radio1">Doctor</label>
+                            </div>
+                        </label>
+                        <label class="radio-inline">
+                            <div class="radio radio-info">
+                                <input type="radio" name="radio" onchange="docType()" id="chemeisty" value="option2">
+                                <label for="radio2">chemeisty</label>
+                            </div>
+                        </label>
+                    </div>
+
+                 
+                </div>
+                
+                <div class="form-group" id="specializationBox">
                     <label for="specialization">Specialization</label>
                     <div class="input-group">   
                         <div class="input-group-addon"><i class=" icon-calender"></i></div>
                         <input type="text" class="form-control" id="specialization" name="specialization" placeholder="specialization"> </div>
                 </div>
+             
                 <div class="form-group">
                     <label for="address">Address</label>
                     <div class="input-group">   
@@ -263,9 +284,22 @@ function initTable(){
 </html>
 
 <?php
-echo"<input type='text' id='eID' value='".$_SESSION['Executive']."'/>";
+echo"<input type='text' id='eID' value='".$_SESSION['eid']."'/>";
 ?>
 <script>
+      $("#specializationBox").hide();
+function docType(){
+    if ($("#doctor").is(":checked")) {
+        $("#specializationBox").show();
+
+}else{
+    $("#specializationBox").hide();
+//     doctor
+// chemeisty
+}   
+    
+}
+
 
 function registerUser(){
 event.preventDefault();
@@ -276,17 +310,27 @@ var specialization=$('#specialization').val();
 var address=$('#address').val();
 var city=$('#city').val();
 var state=$('#state').val();
-var exID=32;
+var exID=$('#eID').val();
+var type="Doctor";
+if ($("#doctor").is(":checked")) {
+         
+    type="doctor";
+
+}else{
+    type="chemeisty";
+}
+
+alert(exID);
 let xhr=new XMLHttpRequest();
 xhr.open('POST','server/userCRUD.php');
 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-data="insertDoctor="+JSON.stringify({exID,name,phone,dob,specialization,address,city,state});
+data="insertDoctor="+JSON.stringify({exID,name,phone,dob,specialization,address,city,state,type});
  xhr.send(data);
  xhr.onreadystatechange = function()
 	  	{
 	    	if (xhr.readyState == 4 && xhr.status == 200){
 
-                
+                alert(xhr.responseText);
                 
 
             }
@@ -333,5 +377,5 @@ function fatchAdmins(){
 
 
 fatchAdmins();
-initTable();
+ 
 </script>

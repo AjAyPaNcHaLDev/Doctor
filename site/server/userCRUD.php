@@ -53,8 +53,13 @@ if(isset($_POST["insertExecutive"])){
     $phone =$arr->phone;
     $password =$arr->password;
     $status =$arr->status;
-    $sql="INSERT INTO admin (name,phone,email,password ,status) VALUES ('{$name}' ,'{$phone}','{$email}','{$password}','{$status}')";
-    $cheak="SELECT email FROM admin  WHERE email='$email'";
+      $rsm=$arr->rsm;
+  $rasm=$arr->rasm;
+  $state=$arr->state;
+  $city=$arr->city;
+    $sql="INSERT INTO sale_executive (name,phone,email,password ,status,	state,city,under_rsm,under_asm) VALUES
+     ('{$name}' ,'{$phone}','{$email}','{$password}','{$status}','{$state}','{$city}','{$rsm}','{$rasm}')";
+    $cheak="SELECT email FROM sale_executive  WHERE email='$email'";
     $count=mysqli_query($conn,$cheak) or die("[{msg:sql failed ,error:true}]");
     if (mysqli_num_rows($count)>0) {
     echo("[{msg:already registerd Executive,error:true}]");
@@ -102,9 +107,9 @@ if(isset($_POST["insertDoctor"])){
     $city =$arr->city;
     $state =$arr->state;
     $exID =$arr->exID;  
-     
-    $sql="INSERT INTO doctors ( eid,name, phone, dob, specialization, address, state,city)
-  VALUES ('{$exID}','{$name}','{$phone}','{$dob}','{$specialization}' ,'{$address}','{$state}','{$city}')";
+    $type =$arr->type;  
+    $sql="INSERT INTO doctors ( eid,name, phone, dob, specialization, address, state,city,type)
+  VALUES ('{$exID}','{$name}','{$phone}','{$dob}','{$specialization}' ,'{$address}','{$state}','{$city}','{$type}')";
     $cheak="SELECT phone FROM doctors  WHERE phone='$phone'";
     $count=mysqli_query($conn,$cheak) or die("[{msg:sql failed ,error:true}]");
     if (mysqli_num_rows($count)>0) {

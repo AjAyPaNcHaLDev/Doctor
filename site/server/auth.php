@@ -17,10 +17,15 @@ if (mysqli_num_rows($sql)==0) {
     header("location:../login.php?msg=not registered");
 }else{
 	while($user=mysqli_fetch_assoc($sql)){
-		$_SESSION['id']=$user['id'];
-		$_SESSION['type']=$user['type'];
+		if($type=="SALE-EXECUTIVE"){
+			$table="sale_executive";
+			$_SESSION['type']="SALE-EXECUTIVE";
+			$_SESSION['eid']=$user['eid'];
+		}else{
+			$_SESSION['type']=$user['type'];
+			$_SESSION['id']=$user['id'];
+		}
         $_SESSION['session_status']=true;
-		$_SESSION['Executive']="3002";
 		header("location:../Dashboard.php");
 	}
 }

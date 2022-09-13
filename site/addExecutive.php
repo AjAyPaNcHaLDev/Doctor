@@ -64,6 +64,30 @@ else echo"not ok";
                         <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter phone"> </div>
                 </div>
                 <div class="form-group">
+                    <label for="rsm">Under RRM</label>
+                    <div class="input-group">   
+                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                        <input type="number" class="form-control" id="rsm" name="rsm" placeholder="enter id of RRM"> </div>
+                </div>
+                <div class="form-group">
+                    <label for="rasm">Under RASM</label>
+                    <div class="input-group">   
+                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                        <input type="number" class="form-control" id="rasm" name="rasm" placeholder="enter id RASM"> </div>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <div class="input-group">   
+                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="state"> </div>
+                </div>
+                <div class="form-group">
+                    <label for="city">City </label>
+                    <div class="input-group">   
+                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="city"> </div>
+                </div>
+                <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="ti-lock"></i></div>
@@ -247,6 +271,10 @@ var name=$('#name').val();
 var email=$('#email').val();
 var phone=$('#phone').val();
 var password=$('#password').val();
+var rsm=$('#rsm').val();
+var rasm=$('#rasm').val();
+var state=$('#state').val();
+var city=$('#city').val();
 var status=1;
 if ($("#status0").is(":checked")) {
    status=0;
@@ -258,7 +286,7 @@ if ($("#status0").is(":checked")) {
 let xhr=new XMLHttpRequest();
 xhr.open('POST','server/userCRUD.php');
 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-data="insertExecutive="+JSON.stringify({name,email,phone,password,status});
+data="insertExecutive="+JSON.stringify({name,email,phone,password,status,rsm,rasm,state,city});
  xhr.send(data);
 
  xhr.onreadystatechange = function()
