@@ -475,7 +475,7 @@ xhr.onerror = function() {
 
         
         <?php if (isset($_SESSION['id'])) echo "let gm='" . $_SESSION['id'] . "';";?>
-                function registerUser(){
+  function registerUser(){
         event.preventDefault();
         const name=$('#name').val();
         const email=$('#email').val();

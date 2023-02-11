@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 22, 2023 at 07:05 PM
+-- Host: localhost
+-- Generation Time: Feb 11, 2023 at 07:35 PM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -69,9 +69,17 @@ CREATE TABLE `doctors` (
   `state` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `qualification` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL COMMENT 'not in use anyware',
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctors`
+--
+
+INSERT INTO `doctors` (`id`, `type`, `eid`, `name`, `phone`, `email`, `dob`, `specialization`, `address`, `state`, `city`, `qualification`, `category`, `password`, `entry_date`) VALUES
+(77, 'Doctor', 22, 'jjjjj', '7887', 'ffyu@yuj', '2023-02-09', 'ljl', 'okoko', 'JHARKHAND', 'LATEHAR', 'nnknkln', 'Core ( Dr. Given business)', NULL, '2023-02-11 18:21:34');
 
 -- --------------------------------------------------------
 
@@ -7747,8 +7755,8 @@ CREATE TABLE `sales` (
 CREATE TABLE `sale_executive` (
   `eid` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `phone` varchar(12) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(12) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
@@ -7886,7 +7894,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `location`

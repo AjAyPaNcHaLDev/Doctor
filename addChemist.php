@@ -99,9 +99,10 @@
 
                                             <div id="alert"></div>
                                             <div class="form-group">
-                                                <button type="submit" style="float:right;" name="addUser"
+                                                <button type="submit" style="float:right;" id="addUser"  name="addUser"
                                                     class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
-                                            </div>
+                                                    <button style="float:right;"type="reset" class="btn btn-error waves-effect waves-light m-r-10" onclick="resetTask()">reset</button>
+                                               </div>
                                         </form>
 
                                     </div>
@@ -219,7 +220,7 @@ if ($_SESSION['type'] == 1) {
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'server/userCRUD.php');
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        data = "insertDoctor=" + JSON.stringify({ exID, name, phone, dob, email, address, city, state, type });
+        data = "insertDoctor=" + JSON.stringify({ task,exID, dId, name, phone, dob, email, address, city, state, type });
         xhr.send(data);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -282,7 +283,7 @@ if ($_SESSION['type'] == 1) {
                         {
                             data: "id", render: function (data, type, row, meta) {
                                 return type === 'display' ?
-                                    '<button class="btn btn-warning" onClick="alert(' + data + ')">   &nbsp<i class="icon-user "></i></button>' :
+                                    '<button class="btn btn-warning" onClick="getUserByID(' + data + ')">   Update <i class="icon-user "></i></button>' :
                                     data;
                             }
                         },
@@ -354,6 +355,64 @@ if ($_SESSION['type'] == 1) {
 
     }
 
+    let task=0; 
+    let dId=null;     
+    function  getUserByID(id)
+      {
+           
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST','server/userCRUD.php',true);
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        req="getDoctorByid="+JSON.stringify({id});
+        xhr.send(req);   
+          xhr.onreadystatechange = function()
+          {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            { 
+            var data =JSON.parse(xhr.response); 
+                if(data.error==false){ 
+                    data=data.data
+                     const obj={
+                        value:data.state
+                    } 
+                    fetchCity(obj)  
+                     setTimeout(()=>{
+                        $('#Doctorcategory').val(data.category);
+                        $('#name').val(data.name);
+                        $('#email').val(data.email);
+                        $('#phone').val(data.phone);
+                        $('#qualification').val(data.qualification);
+                        $('#specialization').val(data.specialization);
+                        $('#dob').val(data.dob);
+                        $('#address').val(data.address);
+                        $('#state').val(data.state);
+                        $('#city').val(data.city);
+                        
+                     },200); 
+                          var $select = document.querySelector('#city');
+                          $select.value = data.city; 
+                      console.log($("#city").val())
+                 
+                    var $radios = $('input:radio[name=Doctorcategory]');
+                 $radios.filter(`[value=${data.status}]`).prop('checked', true); 
+                    task=1; 
+                   dId=id; 
+                $("#addUser").text("Update");
+                swal("selected","","info");
+                }else{
+                    task=dId=0;
+                swal("something went wrong","","error");
+                }
+                 
+            } 
+          } 
+        } 
+
+
+        function resetTask(){
+            $("#addUser").text("Add New");
+            task=dId=0;
+        }
 
 </script>
 

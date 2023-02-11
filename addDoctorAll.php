@@ -55,18 +55,18 @@
                                             </div>
 
                                             <div class="form-group" style="display:none" id="doctorCat">
-                                                <label class="control-label">Doctor Category</label>
+                                                <label class="control-label">Doctor category</label>
                                                 <div class="radio-list">
                                                     <label class="radio-inline p-0">
                                                         <div class="radio radio-info">
-                                                            <input type="radio" name="DoctorCategory" id="core"
+                                                            <input type="radio" name="Doctorcategory" id="core"
                                                                 value="Core  ( dr. Given business) ">
                                                             <label for="core">Core ( dr. Given business) </label>
                                                         </div>
                                                     </label>
                                                     <label class="radio">
                                                         <div class="radio-inline radio-info">
-                                                            <input type="radio" name="DoctorCategory" id="Non_core"
+                                                            <input type="radio" name="Doctorcategory" id="Non_core"
                                                                 value="Non core ( dr. Not given business)">
                                                             <label for="Non_core">Non core ( dr. Not given
                                                                 business)</label>
@@ -351,15 +351,15 @@ if ($_SESSION['type'] == 1) {
         var state = $('#state').val();
         var email = $('#email').val();
 
-        var DoctorCategory = $("input[type='radio'][name='DoctorCategory']:checked");
-        doctor_category = DoctorCategory.val();
+        var Doctorcategory = $("input[type='radio'][name='Doctorcategory']:checked");
+        doctor_category = Doctorcategory.val();
 
         var type = "Doctor";
         if ($("#doctor").is(":checked")) {
 
             type = "doctor";
             if (doctor_category == undefined) {
-                alert("please select Doctor Category")
+                alert("please select Doctor category")
                 return false;
             }
 

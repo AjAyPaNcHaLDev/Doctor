@@ -96,6 +96,9 @@
                                                                 <th>Phone</th>
                                                                 <th>Email</th>
                                                                 <th>FLM</th>
+                                                                <th>SLM</th>
+                                                                <th>TLM</th>
+                                                                <th>GM</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -120,6 +123,24 @@
                                                                     $info = mysqli_query($GLOBALS['conn'], $query) or die("<script></script");
                                                                     $flm_name = mysqli_fetch_assoc($info);
                                                                     $flm_name = $flm_name['flm_name'];
+
+                                                                    $slm = $row['slm'];
+                                                                    $query = "SELECT name as slm_name   from admin WHERE id=$slm limit 1";
+                                                                    $info = mysqli_query($GLOBALS['conn'], $query) or die("<script></script");
+                                                                    $slm_name = mysqli_fetch_assoc($info);
+                                                                    $slm_name = $slm_name['slm_name'];
+
+                                                                    $tlm = $row['tlm'];
+                                                                    $query = "SELECT name as tlm_name   from admin WHERE id=$tlm limit 1";
+                                                                    $info = mysqli_query($GLOBALS['conn'], $query) or die("<script></script");
+                                                                    $tlm_name = mysqli_fetch_assoc($info);
+                                                                    $tlm_name = $tlm_name['tlm_name'];
+
+                                                                    $gm = $row['gm'];
+                                                                    $query = "SELECT name as gm_name   from admin WHERE id=$gm limit 1";
+                                                                    $info = mysqli_query($GLOBALS['conn'], $query) or die("<script></script");
+                                                                    $gm_name = mysqli_fetch_assoc($info);
+                                                                    $gm_name = $gm_name['gm_name'];
                                                                     ?><tr>
                                                                                 <td style="text-align:center">  
                                                                                 <?php if ($eid == $id) { ?>
@@ -137,6 +158,9 @@
                                                                                 <td><?= $phone ?></td>
                                                                                 <td><?= $email ?></td>
                                                                                 <td><?= $flm_name ?></td>
+                                                                                <td><?= $slm_name ?></td>
+                                                                                <td><?= $tlm_name ?></td>
+                                                                                <td><?= $gm_name ?></td>
                                                                                 </tr>
                                                                                 <?php
                                                                 }

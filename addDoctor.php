@@ -18,20 +18,20 @@
                                         <form onsubmit="registerUser()" id="registerUser" action="server/userCRUD.php"
                                             method="post">
                                             <div class="form-group">
-                                                <label class="control-label">Doctor Category</label>
+                                                <label class="control-label">Doctor category</label>
                                                 <div class="radio-list">
                                                     <label class="radio-inline p-0">
                                                         <div class="radio radio-info">
-                                                            <input type="radio" name="DoctorCategory" id="core"
-                                                                value="Core  ( dr. Given business) ">
-                                                            <label for="core">Core ( dr. Given business) </label>
+                                                            <input type="radio" name="Doctorcategory" id="core"
+                                                                value="Core ( Dr. Given business)">
+                                                            <label for="core">Core ( Dr. Given business) </label>
                                                         </div>
                                                     </label>
                                                     <label class="radio-inline">
                                                         <div class="radio radio-info">
-                                                            <input type="radio" name="DoctorCategory" id="Non_core"
-                                                                value="Non core ( dr. Not given business)">
-                                                            <label for="Non_core">Non core ( dr. Not given
+                                                            <input type="radio" name="Doctorcategory" id="Non_core"
+                                                                value="Non core ( Dr. Not given business)">
+                                                            <label for="Non_core">Non core ( Dr. Not given
                                                                 business)</label>
                                                         </div>
                                                     </label>
@@ -109,12 +109,12 @@
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><i class="icon-user"></i></div>
                                                     <select style="margin-left:12px;" class="form-control" id="state"
-                                                        data-style="form-control" name="type" onchange="fetchCity(this)"
+                                                        data-style="form-control" name="state" onchange="fetchCity(this)"
                                                         required="true">
                                                         <option value="select" selected disabled>select</option>
                                                         <?php
                                                         $sql = "SELECT DISTINCT  state FROM `location`  ";
-                                                        $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
+                                                        $res = mysqli_query($conn, $sql) or die("<srcipt> alert('state fetch error')</srcipt>");
 
                                                         if (mysqli_num_rows($res) > 0) {
                                                             while ($row = mysqli_fetch_assoc($res)) {
@@ -148,9 +148,10 @@
 
                                             <div id="alert"></div>
                                             <div class="form-group">
-                                                <button type="submit" style="float:right;" name="addUser"
-                                                    class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
-                                            </div>
+                                                <button type="submit" style="float:right;" id="addUser" name="addUser"
+                                                    class="btn btn-success waves-effect waves-light m-r-10">Add New</button>
+                                                    <button style="float:right;" name="addUser" type="reset" class="btn btn-error waves-effect waves-light m-r-10" onclick="resetTask()">reset</button>
+                  </div>
                                         </form>
 
                                     </div>
@@ -177,6 +178,7 @@
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>D.O.B.</th>
+                                                    <th>category</th>
                                                     <th>Specialization</th>
                                                     <th>qualification</th>
                                                     <th>Address</th>
@@ -193,6 +195,7 @@
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>D.O.B.</th>
+                                                    <th>category</th>
                                                     <th>Specialization</th>
                                                     <th>qualification</th>
                                                     <th>Address</th>
@@ -264,6 +267,8 @@ if ($_SESSION['type'] == 1) {
     // }   
 
     // }
+    let task=0; 
+    let dId=null;     
 
     var exID = $('#eID').val();
     function registerUser() {
@@ -277,19 +282,19 @@ if ($_SESSION['type'] == 1) {
         var city = $('#city').val();
         var state = $('#state').val();
         var email = $('#email').val();
-        var DoctorCategory = $("input[type='radio'][name='DoctorCategory']:checked");
-        doctor_category = DoctorCategory.val();
+        var Doctorcategory = $("input[type='radio'][name='Doctorcategory']:checked");
+        doctor_category = Doctorcategory.val();
         var type = "Doctor";
         if (doctor_category == undefined) {
-            alert("please select Doctor Category")
+            alert("please select Doctor category")
             return false;
         }
 
-
+const request={ task,exID, dId,name, phone, dob, email, specialization, address, city, state, type, doctor_category, qualification }
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'server/userCRUD.php');
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        data = "insertDoctor=" + JSON.stringify({ exID, name, phone, dob, email, specialization, address, city, state, type, doctor_category, qualification });
+        data = "insertDoctor=" + JSON.stringify(request);
         xhr.send(data);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -344,7 +349,7 @@ if ($_SESSION['type'] == 1) {
                         {
                             data: "id", render: function (data, type, row, meta) {
                                 return type === 'display' ?
-                                    '<button  class="btn btn-warning" onClick="alert(' + data + ')">   &nbsp<i class="icon-user "></i></button>' :
+                                    '<button  class="btn btn-warning" onClick="getUserByID(' + data + ')">   Update<i class="icon-user "></i></button>' :
                                     data;
                             }
                         },
@@ -354,6 +359,7 @@ if ($_SESSION['type'] == 1) {
                         { "data": "phone" },
                         { "data": "email" },
                         { "data": "dob" },
+                        { "data": "category" },
                         { "data": "specialization" },
                         { "data": "qualification" },
                         { "data": "address" },
@@ -411,8 +417,65 @@ if ($_SESSION['type'] == 1) {
 
     }
 
+//gat user for update
 
 
+function  getUserByID(id)
+      {
+           
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST','server/userCRUD.php',true);
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        req="getDoctorByid="+JSON.stringify({id});
+        xhr.send(req);   
+          xhr.onreadystatechange = function()
+          {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            { 
+            var data =JSON.parse(xhr.response); 
+                if(data.error==false){ 
+                    data=data.data
+                     const obj={
+                        value:data.state
+                    } 
+                    fetchCity(obj)  
+                     setTimeout(()=>{
+                        $('#Doctorcategory').val(data.category);
+                        $('#name').val(data.name);
+                        $('#email').val(data.email);
+                        $('#phone').val(data.phone);
+                        $('#qualification').val(data.qualification);
+                        $('#specialization').val(data.specialization);
+                        $('#dob').val(data.dob);
+                        $('#address').val(data.address);
+                        $('#state').val(data.state);
+                        $('#city').val(data.city);
+                        
+                     },200); 
+                          var $select = document.querySelector('#city');
+                          $select.value = data.city; 
+                      console.log($("#city").val())
+                 
+                    var $radios = $('input:radio[name=Doctorcategory]');
+                 $radios.filter(`[value='${data.category}']`).prop('checked', true); 
+                    task=1; 
+                   dId=id; 
+                $("#addUser").text("Update");
+                swal("selected","","info");
+                }else{
+                    task=dId=0;
+                swal("something went wrong","","error");
+                }
+                 
+            } 
+          } 
+        } 
+
+
+        function resetTask(){
+            $("#addUser").text("Add New");
+            task=dId=0;
+        }
 </script>
 
 
