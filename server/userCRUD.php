@@ -29,12 +29,14 @@ if (isset($_POST["insertExecutive"])) {
         $cheak = "SELECT email FROM sale_executive  WHERE email='$email' or phone='$phone'";
         $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong {count row}"))));
         if (mysqli_num_rows($count) > 0) {
-            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already register email or phone")));exit();
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already register email or phone")));
+            exit();
         } else {
             mysqli_query($conn, $Insert) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "error while register new Executive"))));
-            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Executive registered")));exit();
-        } 
-    } else if ($task == 1) { 
+            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Executive registered")));
+            exit();
+        }
+    } else if ($task == 1) {
         $eid = $arr->eid;
         $Update = "UPDATE `sale_executive` SET  `name`='{$name}' ,`phone`='{$phone}',`email`='{$email}',`password`='{$password}',`status`='{$status}',`state`='{$state}',`city`='{$city}',`tlm`='{$tlm}',`flm`='{$flm}',`slm`='$slm',`tariff_kms`='{$tariff_kms}',`day_care`='{$day_care}',`entry_date`='$date' WHERE eid=$eid";
         $cheak = "SELECT email FROM sale_executive  WHERE (email='$email' or phone='$phone') AND eid != $eid";
@@ -43,11 +45,13 @@ if (isset($_POST["insertExecutive"])) {
             die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered Details"))));
         } else {
             mysqli_query($conn, $Update) or die(print_r(json_encode(array("error" => true, "Executive Update failed "))));
-            print_r(json_encode(array("error" => false, "msg" => "Executive Updated")));exit();
+            print_r(json_encode(array("error" => false, "msg" => "Executive Updated")));
+            exit();
         }
 
     } else {
-        print_r(json_encode(array("error" => true, "msg" => "something went wrong")));exit();
+        print_r(json_encode(array("error" => true, "msg" => "something went wrong")));
+        exit();
     }
 
 
@@ -73,20 +77,24 @@ if (isset($_POST["insertManager"])) {
         $cheak = "SELECT email FROM admin  WHERE email='$email' or phone='$phone' ";
         $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
         if (mysqli_num_rows($count) > 0) {
-            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered details")));exit();
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered details")));
+            exit();
             exit();
         } else {
             mysqli_query($conn, $Insert) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong while add admin"))));
-            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Admin Registerd")));exit();
+            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Admin Registerd")));
+            exit();
         }
     } else if ($task == 1) {
         $cheak = "SELECT email FROM admin  WHERE (email='$email' or phone='$phone') AND id != $id";
         $count = mysqli_query($conn, $cheak) or die("[{msg:sql failed 0 ,error:true}]");
         if (mysqli_num_rows($count) > 0) {
-            print_r(json_encode(array("error" => true, "data" => null, "msg" => "Admin add Failed due to already registerd phone or email Updated")));exit();
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "Admin add Failed due to already registerd phone or email Updated")));
+            exit();
         } else {
             mysqli_query($conn, $Update) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "unable to update admin."))));
-            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Admin Updated")));exit();
+            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Admin Updated")));
+            exit();
         }
     }
 }
@@ -94,67 +102,61 @@ if (isset($_POST["insertDoctor"])) {
     $arr = array();
     $arr = json_decode($_POST['insertDoctor']);
     $name = $arr->name;
-    $phone = $arr->phone; 
-    empty($arr->dob)==true?$dob = null:$dob = $arr->dob;
-    empty($arr->specialization)==true?$specialization = null:$specialization = $arr->specialization;
-    empty($arr->qualification)==true?$qualification = null:$qualification = $arr->qualification;
-    empty($arr->doctor_category)==true?$category = null:$category = $arr->doctor_category; 
+    $phone = $arr->phone;
+    empty($arr->dob) == true ? $dob = null : $dob = $arr->dob;
+    empty($arr->specialization) == true ? $specialization = null : $specialization = $arr->specialization;
+    empty($arr->qualification) == true ? $qualification = null : $qualification = $arr->qualification;
+    empty($arr->doctor_category) == true ? $category = null : $category = $arr->doctor_category;
     $address = $arr->address;
     $city = $arr->city;
     $state = $arr->state;
     $email = $arr->email;
-    $exID = $arr->exID;
-    
+    $exID = empty($arr->exID) == true ? null : $arr->exID;
     $type = $arr->type;
     $task = $arr->task;
-   
 
-// --------->  insert
 
-// --------- >end insert
-// $sql = "INSERT INTO doctors ( eid,name, phone,email, dob, specialization,qualification, address, state,city,type,category)
-// VALUES ('{$exID}','{$name}','{$phone}','{$email}','{$dob}','{$specialization}','{$qualification}' ,'{$address}','{$state}','{$city}','{$type}','{$category}')";
-// $cheak = "SELECT phone FROM doctors  WHERE email='$email'";
-// $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
-// if (mysqli_num_rows($count) > 0) {
-//     print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registerd")));exit();
-// } else {
-//     mysqli_query($conn, $sql) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
-//     print_r(json_encode(array("error" => false, "data" => null, "msg" => "registerd ")));exit();
 
-// }
 
-if ($task == 0) {
-    $Insert = "INSERT INTO doctors ( eid,name, phone,email, dob, specialization,qualification, address, state,city,type,category)
+    if ($task == 0) {
+        $Insert = "INSERT INTO doctors ( eid,name, phone,email, dob, specialization,qualification, address, state,city,type,category)
     VALUES ('{$exID}','{$name}','{$phone}','{$email}','{$dob}','{$specialization}','{$qualification}' ,'{$address}','{$state}','{$city}','{$type}','{$category}')";
-    $cheak = "SELECT phone FROM doctors  WHERE email='$email'";
-    $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong {count row}"))));
-    if (mysqli_num_rows($count) > 0) {
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => "already register email or phone")));exit();
-    } else {
-        mysqli_query($conn, $Insert) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "error while register "))));
-        print_r(json_encode(array("error" => false, "data" => null, "msg" => "registered")));exit();
-    } 
-} else if ($task == 1) { 
-    
-    $dId = $arr->dId;
+        $cheak = "SELECT phone FROM doctors  WHERE email='$email'";
+        $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong {count row}"))));
+        if (mysqli_num_rows($count) > 0) {
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already register email or phone")));
+            exit();
+        } else {
+            mysqli_query($conn, $Insert) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "error while register "))));
+            print_r(json_encode(array("error" => false, "data" => null, "msg" => "registered")));
+            exit();
+        }
+    } else if ($task == 1) {
 
-      $Update = "UPDATE `doctors` SET "; 
-      $Update .=$exID!="admin"?"`eid`='$exID', ":null; 
-      $Update.="  `type`='$type',`name`='$name',`phone`='$phone',`email`='$email',`dob`='$dob',`specialization`='$specialization',`address`='$address',`state`='$state',`city`='$city',`qualification`='$qualification',`category`='$category' WHERE  id=$dId";
- 
-    $cheak = "SELECT email FROM doctors  WHERE (email='$email' or phone='$phone') AND id != $dId";
-    $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "unable to update Doctor or Chemist info"))));
-    if (mysqli_num_rows($count) > 0) {
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered Details")));exit();
+        $dId = $arr->dId;
+
+        $Update = "UPDATE `doctors` SET ";
+        //   $Update .=$exID!="admin"?"`eid`='$exID', ":null; 
+        $Update .= "  `type`='$type',`name`='$name',`phone`='$phone',`email`='$email',`dob`='$dob',`specialization`='$specialization',`address`='$address',`state`='$state',`city`='$city',`qualification`='$qualification',`category`='$category' WHERE  id=$dId";
+
+        $cheak = "SELECT email FROM doctors  WHERE (email='$email' or phone='$phone') AND id != $dId";
+        $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "unable to update Doctor or Chemist info"))));
+        if (mysqli_num_rows($count) > 0) {
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered Details")));
+            exit();
+        } else {
+            if (!mysqli_query($conn, $Update)) {
+                print_r(json_encode(array("error" => true, "  Update failed ")));
+                exit();
+            }
+            print_r(json_encode(array("error" => false, "msg" => "  Updated")));
+            exit();
+        }
+
     } else {
-        mysqli_query($conn, $Update) or die(print_r(json_encode(array("error" => true, "  Update failed "))));
-        print_r(json_encode(array("error" => false, "msg" => "  Updated")));exit();
+        print_r(json_encode(array("error" => true, "msg" => "something went wrong")));
+        exit();
     }
-
-} else {
-    print_r(json_encode(array("error" => true, "msg" => "something went wrong")));exit();
-}
 
 
 
@@ -180,12 +182,14 @@ if (isset($_POST["registerTourPlan"])) {
 
     $check = "SELECT * FROM tour_plan WHERE date_of_visit='$date_of_visit'  AND eid=$exID";
     if (mysqli_num_rows(mysqli_query($conn, $check)) > 0) {
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => " On $date_of_visit this date tour plain already added.")));exit();
+        print_r(json_encode(array("error" => true, "data" => null, "msg" => " On $date_of_visit this date tour plain already added.")));
+        exit();
         exit;
     }
     mysqli_query($conn, $sql) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "failed to add DAR"))));
-    print_r(json_encode(array("error" => false, "data" => null, "msg" => "DAR added")));exit();
-} 
+    print_r(json_encode(array("error" => false, "data" => null, "msg" => "DAR added")));
+    exit();
+}
 if (isset($_POST["submitLeave"])) {
     $arr = array();
     $arr = json_decode($_POST['submitLeave']);
@@ -203,9 +207,11 @@ if (isset($_POST["submitLeave"])) {
         if ($leave == true) {
             mysqli_query($conn, $sql) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
 
-            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Leave added")));exit();
+            print_r(json_encode(array("error" => false, "data" => null, "msg" => "Leave added")));
+            exit();
         } else {
-            print_r(json_encode(array("error" => true, "data" => null, "msg" => "leave not accepted  by server leave must be {leave:true}")));exit();
+            print_r(json_encode(array("error" => true, "data" => null, "msg" => "leave not accepted  by server leave must be {leave:true}")));
+            exit();
         }
     }
 
@@ -221,7 +227,8 @@ if (isset($_POST['getUserByid'])) {
     if (mysqli_num_rows($res) > 0) {
         print_r(json_encode(array("error" => false, "data" => mysqli_fetch_assoc($res))));
     } else {
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No   Adrress Found")));exit();
+        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No   Adrress Found")));
+        exit();
     }
 }
 if (isset($_POST['getAdminByID'])) {
@@ -234,7 +241,8 @@ if (isset($_POST['getAdminByID'])) {
         print_r(json_encode(array("error" => false, "data" => mysqli_fetch_assoc($res))));
     } else {
 
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No user Found")));exit();
+        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No user Found")));
+        exit();
     }
 }
 if (isset($_POST['getDoctorByid'])) {
@@ -246,7 +254,8 @@ if (isset($_POST['getDoctorByid'])) {
     if (mysqli_num_rows($res) > 0) {
         print_r(json_encode(array("error" => false, "data" => mysqli_fetch_assoc($res))));
     } else {
-        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No   Adrress Found")));exit();
+        print_r(json_encode(array("error" => true, "data" => null, "msg" => "No   Adrress Found")));
+        exit();
     }
 }
 
@@ -281,4 +290,3 @@ if (isset($_POST['getDoctorByid'])) {
 //     print_r(json_encode(array("error" => false, "data" => null, "msg" => "Sales Added")));exit();
 // } 
 ?>
-

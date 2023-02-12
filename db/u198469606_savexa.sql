@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 11, 2023 at 07:35 PM
+-- Host: 127.0.0.1
+-- Generation Time: Feb 12, 2023 at 09:04 AM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,7 +79,9 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `type`, `eid`, `name`, `phone`, `email`, `dob`, `specialization`, `address`, `state`, `city`, `qualification`, `category`, `password`, `entry_date`) VALUES
-(77, 'Doctor', 22, 'jjjjj', '7887', 'ffyu@yuj', '2023-02-09', 'ljl', 'okoko', 'JHARKHAND', 'LATEHAR', 'nnknkln', 'Core ( Dr. Given business)', NULL, '2023-02-11 18:21:34');
+(77, 'Doctor', 22, 'jjjjj', '7887', 'ffyu@yuj', '2023-02-09', 'ljl', 'okoko', 'JHARKHAND', 'LATEHAR', 'nnknkln', 'Core ( Dr. Given business)', NULL, '2023-02-11 18:21:34'),
+(78, 'Doctor', 29, 'amit333cvcxc', '12234', 'amit@gmail.com', '2023-02-24', 'h', 'jind haryana', 'KERALA', 'PATHANAMTHITTA', 'high', 'Core ( Dr. Given business)', NULL, '2023-02-12 04:55:40'),
+(79, 'Chemist', 29, 'amit ji a onedfdff', '1234567890', 'amit1@gmail.com', '', '', 'jalander punjab', 'PUNJAB', 'JALANDHAR', '', '', NULL, '2023-02-12 04:57:34');
 
 -- --------------------------------------------------------
 
@@ -7746,6 +7748,13 @@ CREATE TABLE `sales` (
   `update_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `eid`, `choosed_date`, `internal_sales`, `external_sales`, `entry_date`, `insertby`, `role`, `update_at`) VALUES
+(63, '29', '2023-02-25', '1234', '1234', '2023-02-12 07:32:25', 'Manpreet Singh', 'Executive-29', '2023-02-12 07:32:25');
+
 -- --------------------------------------------------------
 
 --
@@ -7803,6 +7812,14 @@ CREATE TABLE `tour_plan` (
   `visit_km` varchar(255) DEFAULT NULL,
   `tahasil` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tour_plan`
+--
+
+INSERT INTO `tour_plan` (`id`, `eid`, `id_doctor`, `date_of_visit`, `place_from`, `place_to`, `place_return_to`, `price`, `attendance`, `attendance_remark`, `doctor_remark`, `remark`, `entry_date`, `visit_km`, `tahasil`) VALUES
+(122, '29', '', '2023-02-13', NULL, NULL, NULL, NULL, '0', '', NULL, NULL, '2023-02-12 05:05:39', NULL, NULL),
+(123, '29', '', '2023-02-12', NULL, NULL, NULL, NULL, '0', '', NULL, NULL, '2023-02-12 05:06:02', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -7894,7 +7911,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `location`
@@ -7912,7 +7929,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `sale_executive`
@@ -7924,7 +7941,7 @@ ALTER TABLE `sale_executive`
 -- AUTO_INCREMENT for table `tour_plan`
 --
 ALTER TABLE `tour_plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `user_type`

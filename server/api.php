@@ -1,6 +1,6 @@
 <?php
 include "conn.php";
-
+include("../session.php");
 function getTable($sql)
 {
 
@@ -48,32 +48,61 @@ if (isset($_POST["callApi"])) {
             break;
 
         case "getChemistTable":
-            $eid = $arr->eid;
-            if ($eid == "admin") {
-                $sql = "SELECT * FROM doctors WHERE type='Chemist' ORDER BY id DESC";
+            
+            if (empty($arr->eid)||$arr->eid== "admin" ) {
+                $admin = $_SESSION['id'];
+
+                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or slm=$admin or tlm=$admin";
+                $sql=mysqli_query($conn,$sql);
+                $everyExecutive=array();
+                while($row=mysqli_fetch_assoc($sql)){
+                    $everyExecutive[]=$row['eid'];
+                }
+                $everyExecutive=implode(",",$everyExecutive);
+                  $sql = "SELECT * FROM doctors WHERE type='Chemist' AND eid in ($everyExecutive) ORDER BY id DESC";
                 getTable($sql);
             } else {
-                if (empty($arr->city)) {
-                    $sql = "SELECT * FROM doctors WHERE type='Chemist' AND eid=${eid} ORDER BY id DESC";
-                } else {
-                    $city = $arr->city;
-                    $sql = "SELECT * FROM doctors WHERE type='Chemist' AND eid=${eid} AND city='$city' ORDER BY id DESC";
+                $sql="SELECT * FROM doctors WHERE type='Chemist' "; 
+                if(!empty($arr->eid)){
+                    $eid=$arr->eid; 
+                    $sql .="  AND  eid=${eid}"; 
+                }
+
+                if(!empty($arr->city)){
+                    $city=$arr->city;
+                 echo   $sql .="  AND city=${city}";
                 }
                 getTable($sql);
             }
             break;
         case "getDoctorTable":
-            $eid = $arr->eid;
-            if ($eid == "admin") {
-                $sql = "SELECT * FROM doctors WHERE type='doctor' ORDER BY id DESC";
-                getTable($sql);
-            } else {
-                if (empty($arr->city)) {
-                    $sql = "SELECT * FROM doctors WHERE type='doctor' AND eid=${eid} ORDER BY id DESC";
-                } else {
-                    $city = $arr->city;
-                    $sql = "SELECT * FROM doctors WHERE type='doctor' AND eid=${eid} AND city='$city' ORDER BY id DESC";
+            
+             
+            if (empty($arr->eid)||$arr->eid== "admin" ) {
+                $admin = $_SESSION['id'];
+
+                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or slm=$admin or tlm=$admin";
+                $sql=mysqli_query($conn,$sql);
+                $everyExecutive=array();
+                while($row=mysqli_fetch_assoc($sql)){
+                    $everyExecutive[]=$row['eid'];
                 }
+                $everyExecutive=implode(",",$everyExecutive);
+                $sql = "SELECT * FROM doctors WHERE type='doctor' AND eid in ($everyExecutive) ORDER BY id DESC";
+                getTable($sql);
+            } else { 
+                
+                    $sql="SELECT * FROM doctors WHERE type='doctor' "; 
+                    if(!empty($arr->eid)){
+                        $eid=$arr->eid; 
+                        $sql .="  AND  eid=${eid}"; 
+                    }
+
+                    if(!empty($arr->city)){
+                        $city=$arr->city;
+                        $sql .="  AND city=${city}";
+                    }
+                
                 getTable($sql);
             }
             break;
