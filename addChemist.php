@@ -196,7 +196,7 @@
 
 if ($_SESSION['type'] == 1) {
 
-    echo "<input type='text' id='eID' value='admin'/>";
+    echo "<input type='text' id='eID' value=''/>";
 } else if ($_SESSION['type'] == "5") {
 
     echo "<input type='text' id='eID' value='" . $_SESSION['eid'] . "'/>";

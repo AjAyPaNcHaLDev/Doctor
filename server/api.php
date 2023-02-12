@@ -3,7 +3,7 @@ include "conn.php";
 include("../session.php");
 function getTable($sql)
 {
-
+  $sql;
     $myarray = array();
     $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thik went wronge");
     while ($row = mysqli_fetch_assoc($data)) {
@@ -49,10 +49,10 @@ if (isset($_POST["callApi"])) {
 
         case "getChemistTable":
             
-            if (empty($arr->eid)||$arr->eid== "admin" ) {
+            if (empty($arr->eid) ) {
                 $admin = $_SESSION['id'];
 
-                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or slm=$admin or tlm=$admin";
+                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or gm=$admin or  slm=$admin or tlm=$admin";
                 $sql=mysqli_query($conn,$sql);
                 $everyExecutive=array();
                 while($row=mysqli_fetch_assoc($sql)){
@@ -78,10 +78,10 @@ if (isset($_POST["callApi"])) {
         case "getDoctorTable":
             
              
-            if (empty($arr->eid)||$arr->eid== "admin" ) {
+            if (empty($arr->eid) ) {
                 $admin = $_SESSION['id'];
 
-                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or slm=$admin or tlm=$admin";
+                $sql="SELECT eid  FROM sale_executive  WHERE flm=$admin or slm=$admin or gm=$admin or tlm=$admin";
                 $sql=mysqli_query($conn,$sql);
                 $everyExecutive=array();
                 while($row=mysqli_fetch_assoc($sql)){
@@ -102,7 +102,7 @@ if (isset($_POST["callApi"])) {
                         $city=$arr->city;
                         $sql .="  AND city=${city}";
                     }
-                
+              
                 getTable($sql);
             }
             break;
@@ -295,7 +295,7 @@ function getExecutiveWorkInfo($eid, $month)
 {
 
     $myarray = array();
-    $executive_info = mysqli_query($GLOBALS['conn'], "SELECT * FROM sale_executive WHERE eid=$eid") or die("some thik went wronge");
+    $executive_info = mysqli_query($GLOBALS['conn'], "SELECT * FROM sale_executive WHERE eid=$eid") or die("some thik went wronge ff");
 
 
     $executive_info = mysqli_fetch_assoc($executive_info);
