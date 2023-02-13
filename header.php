@@ -115,7 +115,7 @@ if (!isset($_SESSION['session_status'])) {
                 <?php if ($_SESSION['type'] != "5")
                     echo '<li> <a class="waves-effect" aria-expanded="false" href="executiveInfo.php"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Executive info</span></a> </li>' ?>
                     <!--<?php //if($_SESSION['type']=="5")echo'<li> <a class="waves-effect" aria-expanded="false" href="tourPlan.php"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Tour Plan</span></a> </li>'?>-->
-                <?php if ($_SESSION['type'] == "5")
+                <?php // if ($_SESSION['type'] == "5")
                     echo '<li> <a class="waves-effect" aria-expanded="false" href="tours.php"><i class="icon-layers fa-fw"></i> <span class="hide-menu">Daily activity Report</span></a> </li>' ?>
                 <?php //if ($_SESSION['type'] == "5")
                     echo '<li> <a class="waves-effect" aria-expanded="false" href="sales.php"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Sales</span></a> </li>' ?>

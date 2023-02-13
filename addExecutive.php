@@ -13,7 +13,7 @@
         <div class="white-box">
             <h3 class="box-title m-b-0">Add Executive</h3>
             <p class="text-muted m-b-30 font-13"> please fill all the information</p>
-            <div class="row">
+                  <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <form onsubmit="registerUser()" id="registerUser" action="server/userCRUD.php" method="post">
                        
@@ -27,7 +27,7 @@
                     <label for="email">Email address</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="ti-email"></i></div>
-                        <input  autocomplete="off" type="email" class="form-control" id="email" name="email" placeholder="Enter email" required> </div>
+                        <input  autocomplete="off" type="email" class="form-control" id="email" name="email" placeholder="Enter email" > </div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone number</label>
@@ -53,10 +53,10 @@
                 
                                    <div class="form-group">
                     <label for="userType">Third Line Manager</label>
-         <div class="input-group">   
+                 <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
-                <select style="margin-left:12px;" class="form-control" id="Tlm"  data-style="form-control" name="type" required="true">
-                <option value="select" selected disabled>select</option>          
+                      <select style="margin-left:12px;" class="form-control" id="Tlm"  data-style="form-control" name="type" required="true">
+                      <option value="select" selected disabled>select</option>          
                                 <?php
                                 $sql = "SELECT * FROM `admin` WHERE type = '2' ";
                                 $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
@@ -181,8 +181,8 @@
                 </div>
                
                 
-               
-            <div class="form-group">
+                            <center style="color:red"><b>Warning :</b> if you update Executive info  its impact your sales and tour plan </center>
+               <div class="form-group">
                 <ul class="icheck-list">
                 <li>
                     <input  autocomplete="off" type="radio" class="check" id="status0" name="status" checked value="active" data-radio="iradio_flat-red">

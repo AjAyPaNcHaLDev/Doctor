@@ -252,22 +252,22 @@
                                             console.log(data2)
 
                                             $('#doctorList').append(`
-                                            <li class="loc"><span class="path">
-                                                ${data[mykey].place_from}  to   ${data[mykey].place_to}</span></li>
-                                                `);
+  <li class="loc"><span class="path">
+     ${data[mykey].place_from}  to   ${data[mykey].place_to}</span></li>
+     `);
                                             for (const key in data2) {
                                                 if (data2.hasOwnProperty.call(data2, key)) {
 
 
                                                     $("#doctorList").append(
                                                         `
-                                                    <li class="list-group-item bl-info"> 
-                                                            <div class="  checkbox-success"> 
-                                                            <h4 >${data2[key].name} 
-                                                            <span style=" margin: 10px; display: block; text-align:right; text-transform: capitalize; font-family: monospace;"> ${data2[key].type}</span>
-                                                            <span style="margin: 10px; display: block; text-align:right; text-transform: capitalize; font-family: monospace;>${data2[key].specialization}</span></h4>
-                                                            <h4 >${data2[key].address}</h4>
-                                                            </li> ` )
+              <li class="list-group-item bl-info"> 
+                    <div class="  checkbox-success"> 
+                    <h4 >${data2[key].name} 
+                    <span style=" margin: 10px; display: block; text-align:right; text-transform: capitalize; font-family: monospace;"> ${data2[key].type}</span>
+                     <span style="margin: 10px; display: block; text-align:right; text-transform: capitalize; font-family: monospace;>${data2[key].specialization}</span></h4>
+                    <h4 >${data2[key].address}</h4>
+                    </li> ` )
 
                                                 }
                                             }

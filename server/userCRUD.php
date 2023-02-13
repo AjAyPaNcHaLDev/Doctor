@@ -66,10 +66,12 @@ if (isset($_POST["insertManager"])) {
     $type = $arr->type;
     $status = $arr->status;
     $parentId = $arr->underParent;
+    $day_care = $arr->day_care;
+    $tariff_kms = $arr->tariff_kms;
     $id = $arr->_id;
     $task = $arr->task;
-    $Insert = "INSERT INTO admin (type,name,phone,email,password ,status,parentId) VALUES ('{$type}','{$name}' ,'{$phone}','{$email}','{$password}','{$status}','{$parentId}')";
-    $Update = "UPDATE `admin` SET `type`='$type',`parentId`='$parentId',`name`='$name',`phone`='$phone',`email`='$email',`password`='$password',`status`='$status' WHERE id=$id";
+    $Insert = "INSERT INTO admin (type,name,phone,email,password ,status,parentId,day_care,tariff_kms) VALUES ('{$type}','{$name}' ,'{$phone}','{$email}','{$password}','{$status}','{$parentId}','{$day_care}','{$tariff_kms}')";
+    $Update = "UPDATE `admin` SET `type`='$type',`parentId`='$parentId',`name`='$name',`phone`='$phone',`email`='$email',`password`='$password',`status`='$status',`day_care`='${day_care}', `tariff_kms`='${tariff_kms}' WHERE id=$id";
     $cheak = "SELECT email FROM admin  WHERE email='$email' or phone='$phone' ";
     $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
 
@@ -78,8 +80,7 @@ if (isset($_POST["insertManager"])) {
         $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong"))));
         if (mysqli_num_rows($count) > 0) {
             print_r(json_encode(array("error" => true, "data" => null, "msg" => "already registered details")));
-            exit();
-            exit();
+            exit(); 
         } else {
             mysqli_query($conn, $Insert) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "something went wrong while add admin"))));
             print_r(json_encode(array("error" => false, "data" => null, "msg" => "Admin Registerd")));

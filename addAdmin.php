@@ -17,6 +17,8 @@ include "./header.php"; ?>
                         <div class="white-box">
                             <h3 class="box-title m-b-0">Add Manager</h3>
                             <p class="text-muted m-b-30 font-13"> please fill all the information</p>
+                             <center style="color:green"><b>Info :</b> Please Enter correct information</center>
+
                             <div class="row">
                                 <div class="col-sm-12 col-xs-12">
                                     <form onsubmit="registerUser()" id="registerUser" action="server/userCRUD.php"
@@ -35,7 +37,7 @@ include "./header.php"; ?>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="ti-email"></i></div>
                                                 <input type="email" class="form-control" id="email" name="email"
-                                                    placeholder="Enter email" required>
+                                                    placeholder="Enter email" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -55,7 +57,18 @@ include "./header.php"; ?>
                                             </div>
                                         </div>
 
-
+                                        <div class="form-group">
+                                            <label for="phone">Day Care</label>
+                                            <div class="input-group">   
+                                                <div class="input-group-addon"><i class="icon-user"></i></div>
+                                                <input  autocomplete="off" type="number" class="form-control" id="day_care" name="day_care" placeholder="Amount" required > </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Per Km traff</label>
+                                            <div class="input-group">   
+                                                <div class="input-group-addon"><i class="icon-user"></i></div>
+                                                <input  autocomplete="off" type="number" class="form-control" id="tariff_kms" name="tariff_kms" placeholder="Amount"> </div>
+                                            </div>
                                         <div class="form-group">
                                             <label for="userType">Choose Manager type</label>
 
@@ -84,6 +97,7 @@ include "./header.php"; ?>
 
 
 
+                            <center style="color:red"><b>Warning :</b> if you update Manager info  its impact your sales and tour plan </center>
 
 
                                         <div class="form-group">
@@ -298,7 +312,10 @@ include "./header.php"; ?>
         const email = $('#email').val();
         const phone = $('#phone').val();
         const password = $('#password').val();
-        const type = $('#type').val();
+        const type = $('#type').val(); 
+        const day_care=$('#day_care').val();
+        const tariff_kms=$('#tariff_kms').val();
+        
         if (type === "select") {
             alert("please select admin type")
             return;
@@ -326,7 +343,9 @@ include "./header.php"; ?>
             password,
             type,
             status,
-            underParent
+            underParent,
+            day_care, 
+            tariff_kms
         });
 
         xhr.send(data);
@@ -507,7 +526,9 @@ include "./header.php"; ?>
                         $("#phone").val(data.phone)
                         $("#password").val(data.password)
                         $("#type").val(data.type)
-                        $("#underParent").val(data.parentId)
+                        $("#underParent").val(data.parentId) 
+                        $("#day_care").val(data.day_care);
+                        $("#tariff_kms").val(data.tariff_kms);
                     }, 100)
 
                     var $radios = $('input:radio[name=status]');
