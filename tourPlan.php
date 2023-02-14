@@ -1,5 +1,6 @@
 <?php include "server/conn.php" ?>
-<?php include "./header.php"; ?>
+<?php include "./header.php";
+?>
 
 <!-- Page Content -->
 <div class="page-wrapper">
@@ -62,6 +63,45 @@
 
 
 
+                                <div class="form-group">
+                                    <label for="place_return_to">Select Executive </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                                        <select class="form-control" id="eID" name="eid" onchange="resetForm(this)">
+                                            <option value="" selected disabled>select</option>
+                                            <?php
+                                            $sql = "SELECT * FROM `sale_executive`  ";
+                                            if (isset($_SESSION['eid'])) {
+                                                $exID = $_SESSION['eid'];
+                                                $sql .= " WHERE  eid=$exID";
+
+                                                $sql = mysqli_query($conn, $sql);
+                                                while ($row = mysqli_fetch_array($sql)) {
+                                                    ?>
+                                                    <option value="<?= $row['eid'] ?>" selected><?= $row['name'] ?> (<?=
+                                                             $row['email'] ?>)</option>
+                                                    <?php
+                                                }
+
+
+                                            } else if (isset($_SESSION['id'])) {
+                                                $admin = $_SESSION['id'];
+                                                $sql .= " WHERE flm=$admin or gm=$admin or  slm=$admin or tlm=$admin  ";
+
+                                                $sql = mysqli_query($conn, $sql);
+                                                while ($row = mysqli_fetch_array($sql)) {
+                                                    ?>
+                                                        <option value="<?= $row['eid'] ?>"><?= $row['name'] ?> (<?= $row['email'] ?>)</option>
+                                                    <?php
+                                                }
+
+                                            }
+
+
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
 
 
                                 <div class="form-group">
@@ -242,9 +282,7 @@
 
 </html>
 
-<?php
-echo "<input type='text' style='display:none'id='eID' value='" . $_SESSION['eid'] . "'/>";
-?>
+
 <script>
     var exID = $('#eID').val();
     $(function () {
@@ -308,7 +346,7 @@ echo "<input type='text' style='display:none'id='eID' value='" . $_SESSION['eid'
 
                 const res = JSON.parse(xhr.response);
                 if (res.error == true) {
-                    swal("something went wrong", res.msg, "error");
+                    swal("Something went wrong", res.msg, "error");
                 } else {
                     swal("result", res.msg, "success");
                 }
@@ -361,7 +399,7 @@ echo "<input type='text' style='display:none'id='eID' value='" . $_SESSION['eid'
 
 
 
-function fetchCity(event) {
+    function fetchCity(event) {
 
         var state = event.value
         let xhr = new XMLHttpRequest();
@@ -404,14 +442,21 @@ function fetchCity(event) {
 
 
 
-
+    exID = $('#eID').val();
     function getInfo(event) {
+        exID = $('#eID').val();
+        if (!exID) {
+            alert("please select Executive")
+            return;
+        }
         fetchDoctor(event);
         fetchtahasil(event);
         fetchChemist(event);
     }
 
 
+    let tbl1 = null;
+    let tbl2 = null;
     function fetchDoctor(event) {
 
 
@@ -424,7 +469,7 @@ function fetchCity(event) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var data = JSON.parse(xhr.response);
                 i = 0;
-                $('#tabdoctor').DataTable({
+                 $('#tabdoctor').DataTable({
                     dom: 'Bfrtip',
                     "columnDefs": [{
                         "visible": true,
@@ -479,7 +524,7 @@ function fetchCity(event) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var data = JSON.parse(xhr.response);
                 i = 0;
-                $('#tabchemist').DataTable({
+                 $('#tabchemist').DataTable({
                     dom: 'Bfrtip',
                     "columnDefs": [{
                         "visible": true,
@@ -518,6 +563,13 @@ function fetchCity(event) {
         xhr.onerror = function () {
             alert("Request failed");
         };
+    }
+    function resetForm(e) {
+        val = e.value;
+        document.getElementById('registerTourPlan').reset();
+        $("#eID").val(val);
+            // $('#tabchemist').DataTable();
+            // $('#tabdoctor').DataTable(); 
     }
 
 </script>

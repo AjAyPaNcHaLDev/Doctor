@@ -12,7 +12,7 @@ if (isset($_POST['SignIn'])) {
 	} else if ($type == "1") {
 		$table = "admin";
 	} else {
-		header("location:../login.php?msg=something went wrong!.");
+		header("location:../login.php?msg=Something went wrong!.");
 		return;
 	}
 

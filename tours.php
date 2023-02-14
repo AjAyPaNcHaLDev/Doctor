@@ -41,10 +41,8 @@
 
                             $("#calendar").evoCalendar({ theme: 'Orange Coral' })
                                 .on('selectDate', function (newDate, oldDate) {
-                                    //  newDate.target.evoCalendar.$active.date
-
+                                    //  newDate.target.evoCalendar.$active.date 
                                     selectedDate = newDate.target.evoCalendar.$active.date;
-
                                     getTourPlan(selectedDate)
                                     document.getElementById("addTourBtn").href = "tourPlan.php?date=" + selectedDate;
 
@@ -116,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="task-list">
-                                <ul class="list-group" id="doctorList">
+                                <ul class="list-group" id="doctorList" >
                                 </ul>
                             </div>
                             <div>
@@ -158,9 +156,6 @@
             </div>
 
 
-            <?php
-            echo "<input type='text' style='display:none'id='eID' value='" . $_SESSION['eid'] . "'/>";
-            ?>
 
 
             <!-- ===== Right-Sidebar ===== -->
@@ -201,9 +196,8 @@
 
     <script>
 
-        var exID = $('#eID').val();
-        function getTourPlan(date) {
 
+        function getTourPlan(date) {
             var selectedDatelbl = $('#selectedDate');
             var i = 0;
             const d = new Date(date);
@@ -211,7 +205,6 @@
             if (m.toString().length == 1) {
                 m = "0" + m;
             }
-
             day = d.getDate();
             if (day.toString().length == 1) {
                 day = "0" + day;
@@ -223,12 +216,11 @@
             let xhr = new XMLHttpRequest();
             xhr.open('POST', 'server/api.php', true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            req = "callApi=" + JSON.stringify({ "table": "getTourPlan", eid: exID, date });
+            req = "callApi=" + JSON.stringify({ "table": "getTourPlan", date });
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var data = JSON.parse(xhr.response);
                     console.log(data);
-
                     if (data.length >= 1) {
                         //  $('#selectedDate').empty();
                         $('#attendanceDate').empty();
@@ -252,13 +244,15 @@
                                             console.log(data2)
 
                                             $('#doctorList').append(`
-                                            <li class="loc"><span class="path">
-                                                ${data[mykey].place_from}  to   ${data[mykey].place_to}</span></li>
-                                                `);
+                                            <li style="display:flex;justify-content: center;">
+                                             <p class="loc"><span class="path"><b style="color:red">Route:</b>  ${data[mykey].place_from}  to   ${data[mykey].place_to}</span></p>
+                                              <p class="loc"><span class="path"><b style="color:red">Executive:</b>  ${data[mykey].insertby}</span></p> 
+                                              <p class="loc"><span class="path"><b style="color:red">Enter By:</b>  ${data[mykey].insertby} <b style="color:red">Role:</b>${data[mykey].role}</span></p>
+                                               
+                                            </li>
+                                            `);
                                             for (const key in data2) {
-                                                if (data2.hasOwnProperty.call(data2, key)) {
-
-
+                                                if (data2.hasOwnProperty.call(data2, key)) {  
                                                     $("#doctorList").append(
                                                         `
                                                     <li class="list-group-item bl-info"> 
@@ -329,14 +323,14 @@
             }
             dd = d.getFullYear() + "-" + m + "-" + day;
             attendance_remark = $("#attendance_remark").val();
-            data = "submitLeave=" + JSON.stringify({ eid: exID, date_of_visit: dd, attendance_remark, leave: true });
+            data = "submitLeave=" + JSON.stringify({ date_of_visit: dd, attendance_remark, leave: true });
             xhr.send(data);
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     const res = JSON.parse(xhr.response);
                     if (res.error == true) {
-                        swal("something went wrong", res.msg, "error");
+                        swal("Something went wrong", res.msg, "error");
                     } else {
                         swal("result", res.msg, "success");
                     }

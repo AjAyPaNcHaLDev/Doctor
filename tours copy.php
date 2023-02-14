@@ -336,7 +336,7 @@
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     const res = JSON.parse(xhr.response);
                     if (res.error == true) {
-                        swal("something went wrong", res.msg, "error");
+                        swal("Something went wrong", res.msg, "error");
                     } else {
                         swal("result", res.msg, "success");
                     }

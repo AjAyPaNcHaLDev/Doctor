@@ -70,7 +70,7 @@ if (isset($_POST["callApi"])) {
 
                 if(!empty($arr->city)){
                     $city=$arr->city;
-                 echo   $sql .="  AND city=${city}";
+                     $sql .="  AND city='${city}'";
                 }
                 getTable($sql);
             }
@@ -100,17 +100,32 @@ if (isset($_POST["callApi"])) {
 
                     if(!empty($arr->city)){
                         $city=$arr->city;
-                        $sql .="  AND city=${city}";
+                        $sql .="  AND city='${city}'";
                     }
               
                 getTable($sql);
             }
             break;
         case "getTourPlan":
-            $eid = $arr->eid;
+            
             $date = $arr->date;
-            $sql = "SELECT * FROM tour_plan WHERE date_of_visit='${date}' AND eid=${eid}     ";
-
+            $sql="SELECT * FROM tour_plan   WHERE date_of_visit='${date}' ";
+            if (isset($_SESSION['eid'])) {
+                $eid=$_SESSION['eid'];
+                $sql .= " AND eid=${eid} ";
+            }
+            if (isset($_SESSION['id'])) {
+                $id=$_SESSION['id'];
+                $id_exe = "SELECT eid FROM sale_executive WHERE flm=$id or gm=$id or  slm=$id or tlm=$id";
+                $id_exe = mysqli_query($conn, $id_exe);
+                $everyExecutive = array();
+                while ($row = mysqli_fetch_assoc($id_exe)) {
+                    $everyExecutive[] = $row['eid'];
+                }
+                $everyExecutive = implode(",", $everyExecutive); 
+                $sql .= "AND (eid in ($everyExecutive)   OR admin_id=${id})   ";
+            }
+          
             getTable($sql);
 
             break;
