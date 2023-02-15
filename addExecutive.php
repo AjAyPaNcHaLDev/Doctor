@@ -5,9 +5,7 @@
 <!-- Page Content -->
 <div class="page-wrapper">
 <div class="container-fluid">
-<div class="row">
-    
- 
+<div class="row"> 
 <div class="row">
 <div class="col-md-4">
         <div class="white-box">
@@ -46,21 +44,16 @@
                     <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
                         <input  autocomplete="off" type="number" class="form-control" id="tariff_kms" name="tariff_kms" placeholder="Amount"> </div>
-                </div>
-                
-                
-                
-                
-                                   <div class="form-group">
+                </div>  
+                <div class="form-group">
                     <label for="userType">Third Line Manager</label>
-                 <div class="input-group">   
+                  <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
                       <select style="margin-left:12px;" class="form-control" id="Tlm"  data-style="form-control" name="type" required="true">
                       <option value="select" selected disabled>select</option>          
                                 <?php
                                 $sql = "SELECT * FROM `admin` WHERE type = '2' ";
-                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
-
+                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
                                 if (mysqli_num_rows($res) > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $name = $row['name'];
@@ -74,21 +67,17 @@
 
                                 ?>
                             </select> 
-            </div>
-            </div>
-                
-                
-                
+                    </div>
+                </div>  
                 <div class="form-group">
                     <label for="userType">Second Line Manager</label>
-         <div class="input-group">   
+                 <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
-                <select style="margin-left:12px;" class="form-control" id="Slm"  data-style="form-control" name="type" required="true">
-                <option value="select" selected disabled>select</option>          
+                        <select style="margin-left:12px;" class="form-control" id="Slm"  data-style="form-control" name="type" required="true">
+                        <option value="select" selected disabled>select</option>          
                                 <?php
                                 $sql = "SELECT * FROM `admin` WHERE type = '3' ";
-                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
-
+                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
                                 if (mysqli_num_rows($res) > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $name = $row['name'];
@@ -104,32 +93,30 @@
                             </select> 
             </div>
             </div>
-                
-                
-                   <div class="form-group">
+               
+             <div class="form-group">
                     <label for="userType">First Line Manager</label>
-         <div class="input-group">   
-                        <div class="input-group-addon"><i class="icon-user"></i></div>
-                <select style="margin-left:12px;" class="form-control" id="Flm"  data-style="form-control" name="type" required="true">
-                <option value="select" selected disabled>select</option>          
-                                <?php
-                                $sql = "SELECT * FROM `admin` WHERE type = '4' ";
-                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
+                        <div class="input-group">   
+                                        <div class="input-group-addon"><i class="icon-user"></i></div>
+                                <select style="margin-left:12px;" class="form-control" id="Flm"  data-style="form-control" name="type" required="true">
+                                <option value="select" selected disabled>select</option>          
+                                                <?php
+                                                $sql = "SELECT * FROM `admin` WHERE type = '4' ";
+                                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
 
-                                if (mysqli_num_rows($res) > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $name = $row['name'];
-                                        $id = $row['id'];
-                                        $email = $row['email'];
-                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
-                                    }
-                                } else {
-                                    echo `<option value="select">error</option> `;
-                                }
-
-                                ?>
-                            </select> 
-            </div>
+                                                if (mysqli_num_rows($res) > 0) {
+                                                    while ($row = mysqli_fetch_assoc($res)) {
+                                                        $name = $row['name'];
+                                                        $id = $row['id'];
+                                                        $email = $row['email'];
+                                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                                    }
+                                                } else {
+                                                    echo `<option value="select">error</option> `;
+                                                } 
+                                                ?>
+                                            </select> 
+                            </div>
             </div>
                 
                 <!--<div class="form-group">-->
@@ -181,7 +168,7 @@
                 </div>
                
                 
-                            <center style="color:red"><b>Warning :</b> if you update Executive info  its impact your sales and tour plan </center>
+               <center style="color:red"><b>Warning :</b> if you update Executive info  its impact your sales and tour plan </center>
                <div class="form-group">
                 <ul class="icheck-list">
                 <li>

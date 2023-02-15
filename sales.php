@@ -32,7 +32,21 @@
                                         }
                                         if (isset($_SESSION['id'])) {
                                             $admin_id = $_SESSION['id'];
-                                            $role = "Manager-" . $admin_id;
+                                            $type=$_SESSION['type'];
+                                            switch($type){
+                                            case 1:
+                                            $role = "GM-" . $admin_id;
+                                            break;
+                                                case 2:
+                                                    $role = "TLM-" . $admin_id;
+                                                    break;
+                                                        case 3:
+                                                            $role = "SLM-" . $admin_id;
+                                                            break;
+                                                                case 4:
+                                                                    $role = "FLM-" . $admin_id;
+                                                                    break;
+                                            }
                                         } 
                                         $insertby = $_SESSION['name'];
                                         $check = "SELECT * FROM sales WHERE eid=$eid AND choosed_date='$choosed_date' ";

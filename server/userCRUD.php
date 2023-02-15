@@ -183,7 +183,21 @@ if (isset($_POST["registerTourPlan"])) {
     }
     if (isset($_SESSION['id'])) {
         $admin_id = $_SESSION['id'];
-        $role = "Manager-" . $admin_id;
+        $type = $_SESSION['type'];
+        switch ($type) {
+            case 1:
+                $role = "GM-" . $admin_id;
+                break;
+            case 2:
+                $role = "TLM-" . $admin_id;
+                break;
+            case 3:
+                $role = "SLM-" . $admin_id;
+                break;
+            case 4:
+                $role = "FLM-" . $admin_id;
+                break;
+        }
     }else{
         $admin_id ="NULL";
     }
@@ -217,7 +231,21 @@ if (isset($_POST["submitLeave"])) {
 
     if (isset($_SESSION['id'])) {
          $admin_id = $_SESSION['id'];
-        $role = "Manager-" . $admin_id;
+        $type = $_SESSION['type'];
+        switch ($type) {
+            case 1:
+                $role = "GM-" . $admin_id;
+                break;
+            case 2:
+                $role = "TLM-" . $admin_id;
+                break;
+            case 3:
+                $role = "SLM-" . $admin_id;
+                break;
+            case 4:
+                $role = "FLM-" . $admin_id;
+                break;
+        }
     } else {
          
         $admin_id = "NULL";

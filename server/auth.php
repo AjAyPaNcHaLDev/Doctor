@@ -41,11 +41,10 @@ if (isset($_POST['SignIn'])) {
 				} else {
 					$_SESSION['type'] = $user['type'];
 					$_SESSION['id'] = $user['id'];
+					$_SESSION['parentId'] = $user['parentId'];
 				} 
-				header("location:../Dashboard.php");
-
-			} else {
-
+				header("location:../Dashboard.php"); 
+			} else { 
 				$_SESSION['session_status'] = false;
 				header("location:../login.php?msg=something went wrong!.");
 				return;
