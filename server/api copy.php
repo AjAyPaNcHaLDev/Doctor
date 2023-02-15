@@ -156,18 +156,25 @@ if (isset($_POST["callApi"])) {
             break;
         case "getExecutiveForSales":
             $month = $arr->month;
-             $sql = "SELECT DISTINCT eid ,admin_id FROM `tour_plan` WHERE `date_of_visit` like '%$month-%'"; 
-            getExecutiveForSales($sql, $month); 
+            $sql = "SELECT DISTINCT eid FROM `tour_plan` WHERE `date_of_visit` like '%$month-%'";
+
+            getExecutiveForSales($sql, $month);
+
             break;
         case "getExecutiveWorkInfo":
             $eid = $arr->id;
             $month = $arr->month;
-            getExecutiveWorkInfo($eid, $month); 
-            break; 
-        case "parent": 
-            $type = $arr->type; 
+            getExecutiveWorkInfo($eid, $month);
+
+            break;
+
+        case "parent":
+
+            $type = $arr->type;
+
             $sql = "SElECT name ,id FROM admin WHERE type=$type";
-            getTable($sql); 
+            getTable($sql);
+
             break;
     }
 
@@ -257,66 +264,40 @@ function getExecutiveForSales($sql, $month)
     $myarray = array();
     $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thik went wronge");
     $result = array();
-// echo $sql;
-// return;
+
     while ($row = mysqli_fetch_assoc($data)) {
 
         $eid = $row['eid'];
-        $admin_id = $row['admin_id'];
-        if(!empty($eid)){ 
-            $exQuery = "SELECT * FROM sale_executive WHERE eid='$eid' ";
-            $exQuery = mysqli_query($GLOBALS['conn'], $exQuery) or die("some thik went wronge exQuery 1");
-            $exQuery = mysqli_fetch_assoc($exQuery); 
-            $total_day_work = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT DISTINCT date_of_visit FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND eid=$eid AND 	attendance=1"));
-            $km_query = mysqli_query($GLOBALS['conn'], "SELECT visit_km FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND eid=$eid AND 	attendance=1");
-            $visit_km = 0;
-            while ($_km = mysqli_fetch_assoc($km_query)) {
-                $visit_km +=(int) $_km['visit_km'];
-            }
-            $visits = mysqli_num_rows($km_query);
-            $overalltotal = $total_day_work * $exQuery['day_care'] + $visit_km * $exQuery['tariff_kms'];
-            $myarray[] = array(
-                "eid" => $exQuery['eid'],
-                "phone" => $exQuery['phone'],
-                "name" => $exQuery['name'],
-                "day_care" => $exQuery['day_care'],
-                "email" => $exQuery['email'],
-                "visits" => $visits,
-                "total_kms" => $visit_km,
-                "total_visit_rs" => $visit_km * $exQuery['tariff_kms'],
-                "attendances" => $total_day_work,
-                "tariff_kms" => $exQuery['tariff_kms'],
-                "day_care_total" => $total_day_work * $exQuery['day_care'],
-                "total" => $overalltotal 
-            );
+        $exQuery = "SELECT * FROM sale_executive WHERE eid=$eid";
+        $exQuery = mysqli_query($GLOBALS['conn'], $exQuery) or die("some thik went wronge exQuery");
+        $exQuery = mysqli_fetch_assoc($exQuery);
+        // echo $total_day_work=mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT DISTINCT date_of_visit FROM `tour_plan` WHERE `date_of_visit` like '%-09-%' AND eid=6 AND 	attendance=1"));
+
+        $total_day_work = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT DISTINCT date_of_visit FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND eid=$eid AND 	attendance=1"));
+
+        $km_query = mysqli_query($GLOBALS['conn'], "SELECT visit_km FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND eid=$eid AND 	attendance=1");
+        $visit_km = 0;
+        while ($_km = mysqli_fetch_assoc($km_query)) {
+            $visit_km +=(int) $_km['visit_km'];
         }
-        if(!empty($admin_id)){
-            $admQuery = "SELECT * FROM admin WHERE id='$admin_id' ";
-            $admQuery = mysqli_query($GLOBALS['conn'], $admQuery) or die("some thik went wronge admQuery 1");
-            $admQuery = mysqli_fetch_assoc($admQuery); 
-            $total_day_work = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT DISTINCT date_of_visit FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND admin_id=$admin_id AND 	attendance=1"));
-            $km_query = mysqli_query($GLOBALS['conn'], "SELECT visit_km FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND admin_id=$admin_id AND 	attendance=1");
-            $visit_km = 0;
-            while ($_km = mysqli_fetch_assoc($km_query)) {
-                $visit_km +=(int) $_km['visit_km'];
-            }
-            $visits = mysqli_num_rows($km_query);
-            $overalltotal = $total_day_work * $admQuery['day_care'] + $visit_km * $admQuery['tariff_kms'];
-            $myarray[] = array(
-                "eid" => $admQuery['admin_id'],
-                "phone" => $admQuery['phone'],
-                "name" => $admQuery['name'],
-                "day_care" => $admQuery['day_care'],
-                "email" => $admQuery['email'],
-                "visits" => $visits,
-                "total_kms" => $visit_km,
-                "total_visit_rs" => $visit_km * $admQuery['tariff_kms'],
-                "attendances" => $total_day_work,
-                "tariff_kms" => $admQuery['tariff_kms'],
-                "day_care_total" => $total_day_work * $admQuery['day_care'],
-                "total" => $overalltotal
-            );
-        } 
+        $visits = mysqli_num_rows($km_query);
+        $day_care = $exQuery['day_care'];
+        $tariff_kms = $exQuery['tariff_kms'];
+        $overalltotal = $total_day_work * $exQuery['day_care'] + $visit_km * $exQuery['tariff_kms'];
+        $myarray[] = array(
+            "eid" => $exQuery['eid'],
+            "phone" => $exQuery['phone'],
+            "name" => $exQuery['name'],
+            "day_care" => $exQuery['day_care'],
+            "email" => $exQuery['email'],
+            "visits" => $visits,
+            "total_kms" => $visit_km,
+            "total_visit_rs" => $visit_km * $exQuery['tariff_kms'],
+            "attendances" => $total_day_work,
+            "tariff_kms" => $exQuery['tariff_kms'],
+            "day_care_total" => $total_day_work * $exQuery['day_care'],
+            "total" => $overalltotal
+        );
 
     }
 

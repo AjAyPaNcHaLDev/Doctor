@@ -254,7 +254,7 @@ if (isset($_POST["submitLeave"])) {
     $date_of_visit = $arr->date_of_visit;
     $leave = $arr->leave;
     $attendance_remark = $arr->attendance_remark;
-    $sql = "INSERT INTO tour_plan ( eid ,admin_id,date_of_visit ,attendance,attendance_remark,role,insertby) VALUES ('{$eid}',{$admin_id},'{$date_of_visit}',0 ,'$attendance_remark','{$role}','{$insertby}')";
+    $sql = "INSERT INTO tour_plan ( eid ,admin_id,date_of_visit ,attendance,attendance_remark,role,insertby) VALUES ({$eid},{$admin_id},'{$date_of_visit}',0 ,'$attendance_remark','{$role}','{$insertby}')";
     $cheak = "SELECT * FROM tour_plan  WHERE ( eid=$eid AND date_of_visit='$date_of_visit' AND attendance=0) ";
     $count = mysqli_query($conn, $cheak) or die(print_r(json_encode(array("error" => true, "data" => null, "msg" => "Something went wrong"))));
     if (mysqli_num_rows($count) > 0) {
