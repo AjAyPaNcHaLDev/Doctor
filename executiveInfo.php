@@ -29,7 +29,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -47,7 +47,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -98,7 +98,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -116,7 +116,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -168,7 +168,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -186,7 +186,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -246,7 +246,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -263,7 +263,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Role</th>
+                                                <th>Role/(Insert by)</th>
                                                 <th>Total Parsent</th>
                                                 <th>Visit</th>
                                                 <th>Traff KMS Rs</th>
@@ -409,7 +409,15 @@
                         { "data": "id" },
                         { "data": "name" },
                         { "data": "phone" },
-                        { "data": "role" },
+                        { "data": "role", render: function (data, type, row, meta) {
+                                const insertby=row.insertby;
+                                return type === 'display' ?
+                                    `${data} (${insertby})` :
+                                    data;
+                            }
+                         },
+
+
                         { "data": "attendances" },
                         { "data": "visits" },
                         { "data": "tariff_kms" },

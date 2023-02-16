@@ -49,10 +49,11 @@
                     <label for="userType">Third Line Manager</label>
                   <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
-                      <select style="margin-left:12px;" class="form-control" id="Tlm"  data-style="form-control" name="type" required="true">
+                      <select style="margin-left:12px;" class="form-control" id="Tlm"  onchange="getAdmin(this,'Slm')"  data-style="form-control" name="type" required="true">
                       <option value="select" selected disabled>select</option>          
-                                <?php
-                                $sql = "SELECT * FROM `admin` WHERE type = '2' ";
+                                <?php 
+                                $parentId=$_SESSION['id'];
+                               echo $sql = "SELECT * FROM `admin` WHERE type = '2' and parentId=$parentId ";
                                 $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
                                 if (mysqli_num_rows($res) > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
@@ -64,7 +65,6 @@
                                 } else {
                                     echo `<option value="select">error</option> `;
                                 }
-
                                 ?>
                             </select> 
                     </div>
@@ -73,21 +73,21 @@
                     <label for="userType">Second Line Manager</label>
                  <div class="input-group">   
                         <div class="input-group-addon"><i class="icon-user"></i></div>
-                        <select style="margin-left:12px;" class="form-control" id="Slm"  data-style="form-control" name="type" required="true">
+                        <select style="margin-left:12px;" class="form-control" id="Slm" onchange="getAdmin(this,'Flm')"  data-style="form-control" name="type" required="true">
                         <option value="select" selected disabled>select</option>          
                                 <?php
-                                $sql = "SELECT * FROM `admin` WHERE type = '3' ";
-                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
-                                if (mysqli_num_rows($res) > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $name = $row['name'];
-                                        $id = $row['id'];
-                                        $email = $row['email'];
-                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
-                                    }
-                                } else {
-                                    echo `<option value="select">error</option> `;
-                                }
+                                // $sql = "SELECT * FROM `admin` WHERE type = '3' ";
+                                // $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
+                                // if (mysqli_num_rows($res) > 0) {
+                                //     while ($row = mysqli_fetch_assoc($res)) {
+                                //         $name = $row['name'];
+                                //         $id = $row['id'];
+                                //         $email = $row['email'];
+                                //         echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                //     }
+                                // } else {
+                                //     echo `<option value="select">error</option> `;
+                                // }
 
                                 ?>
                             </select> 
@@ -98,22 +98,22 @@
                     <label for="userType">First Line Manager</label>
                         <div class="input-group">   
                                         <div class="input-group-addon"><i class="icon-user"></i></div>
-                                <select style="margin-left:12px;" class="form-control" id="Flm"  data-style="form-control" name="type" required="true">
+                                <select style="margin-left:12px;" class="form-control" id="Flm"    data-style="form-control" name="type" required="true">
                                 <option value="select" selected disabled>select</option>          
                                                 <?php
-                                                $sql = "SELECT * FROM `admin` WHERE type = '4' ";
-                                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
+                                                // $sql = "SELECT * FROM `admin` WHERE type = '4' ";
+                                                // $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>");
 
-                                                if (mysqli_num_rows($res) > 0) {
-                                                    while ($row = mysqli_fetch_assoc($res)) {
-                                                        $name = $row['name'];
-                                                        $id = $row['id'];
-                                                        $email = $row['email'];
-                                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
-                                                    }
-                                                } else {
-                                                    echo `<option value="select">error</option> `;
-                                                } 
+                                                // if (mysqli_num_rows($res) > 0) {
+                                                //     while ($row = mysqli_fetch_assoc($res)) {
+                                                //         $name = $row['name'];
+                                                //         $id = $row['id'];
+                                                //         $email = $row['email'];
+                                                //         echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                                //     }
+                                                // } else {
+                                                //     echo `<option value="select">error</option> `;
+                                                // } 
                                                 ?>
                                             </select> 
                             </div>
@@ -371,7 +371,7 @@ $('#example23').DataTable({
  fatchExecutive();
 
 
-function fetchCity(event) { 
+function fetchCity(event) {  
     var state =event.value
  let xhr=new XMLHttpRequest();
 xhr.open('POST','server/api.php',true);
@@ -406,7 +406,6 @@ xhr.onerror = function() {
 
 
       function  getUserByID(id){
-           
              let xhr=new XMLHttpRequest();
     xhr.open('POST','server/userCRUD.php',true);
     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -424,8 +423,15 @@ xhr.onerror = function() {
                      const obj={
                         value:data.state
                     } 
-                    fetchCity(obj) 
-                    
+                    fetchCity(obj)  
+                    evt={
+                        value:data.tlm
+                    }
+                    getAdmin(evt,"Slm")
+                    evt={
+                        value:data.slm
+                    }
+                    getAdmin(evt,"Flm")
                      setTimeout(()=>{
                     $("#name").val(data.name);
                     $("#email").val(data.email);
@@ -433,15 +439,16 @@ xhr.onerror = function() {
                     $("#day_care").val(data.day_care);
                     $("#tariff_kms").val(data.tariff_kms);
                     $("#Tlm").val(data.tlm);  
-                    $("#Slm").val(data.slm); 
+                    $("#Slm").val(data.slm);  
                     $("#Flm").val(data.flm);
+                    $("#city").val(data.city);
                     $("#state").val(data.state);  
                     $("#password").val(data.password); 
  
-                     },200) 
-                          var $select = document.querySelector('#city');
-                          $select.value = data.city; 
-                      console.log($("#city").val())
+                     },400) 
+                    //       var $select = document.querySelector('#city');
+                    //       $select.value = data.city; 
+                    //   console.log($("#city").val())
                  
                     var $radios = $('input:radio[name=status]');
                  $radios.filter(`[value=${data.status}]`).prop('checked', true); 
@@ -459,9 +466,8 @@ xhr.onerror = function() {
           } 
         } 
         
-
-        
         <?php if (isset($_SESSION['id'])) echo "let gm='" . $_SESSION['id'] . "';";?>
+
   function registerUser(){
         event.preventDefault();
         const name=$('#name').val();
@@ -530,5 +536,32 @@ xhr.onerror = function() {
                task=0;
                 eid=null; 
         }
+
+  function getAdmin(evt,element){
  
+    parentId=evt.value;
+    let xhr=new XMLHttpRequest();
+        xhr.open('POST','server/api.php');
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        req = "callApi=" + JSON.stringify({ "table": "getAdmin", parentId });
+         xhr.send(req); 
+         xhr.onreadystatechange = function()
+                  {
+                    if (xhr.readyState == 4 && xhr.status == 200)
+                    { 
+                        var data = JSON.parse(xhr.response); 
+                        $("#"+element).empty();
+                        $("#"+element).append(`<option selected disabled>select</option>`)
+                        for (key in data) {
+                            $("#"+element).append(`<option value='${data[key].id}'>${data[key].name} (${data[key].phone})</option>`)
+                        }
+                    }
+                  };  
+        xhr.onprogress = function(event) {
+            // alert("on progress");
+        };
+        xhr.onerror = function() {
+          alert("Request failed");
+        };
+  }
 </script>

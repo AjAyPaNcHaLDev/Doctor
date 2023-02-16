@@ -13,9 +13,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <form onsubmit="registerTourPlan()" id="registerTourPlan" action="server/userCRUD.php"
-                                method="post">
-
-
+                                method="post"> 
                                 <div class="form-group">
                                     <label for="date_of_visit">Selected Date form calender</label>
                                     <div class="input-group">
@@ -23,104 +21,96 @@
                                             echo date("Y-m-d", strtotime($_GET['date'])); ?>" disabled>
                                       </div> 
                                 </div>  
-                            <div class="form-group">
-                                <label for="place_return_to" >Choose TLM </label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="icon-user"></i></div>
-                                        <select class="form-control"   onchange="getManager(this)">
-                                            <option value="" selected disabled>select</option>
-                                            <?php
-                                            $sql = "SELECT * FROM `admin` WHERE `type`=2 ";
-                                            $sql = mysqli_query($conn, $sql);  
-                                            if(isset($_SESSION['id'])){
-                                                  $parentId=$_SESSION['id'];
-                                            // $sql .=" AND  parentId={$parentId} ";
-                                            }
-                                            while ($row = mysqli_fetch_array($sql)) {
-                                                ?>
-                                                <?php echo $parentId == $row['parentId'] ?"parentId". $parentId : null; ?>
-                                            <option value="<?= $row['id'] ?>" ><?= $row['name'] ?> (<?=
-                                                        $row['phone'] ?>)</option>
-                                            <?php
-                                            }   
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                      
-                         <div class="form-group">
-                                    <label for="place_return_to" >Choose SLM </label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="icon-user"></i></div>
-                                        <select class="form-control"   onchange="getManager(this)"">
-                                            <option value="" selected disabled>select</option>
-                                            <?php
-                                            $sql = "SELECT * FROM `sale_executive`  ";
-                                            if (isset($_SESSION['eid'])) {
-                                                $exID = $_SESSION['eid'];
-                                                $sql .= " WHERE  eid=$exID";
-
-                                                $sql = mysqli_query($conn, $sql);
-                                                while ($row = mysqli_fetch_array($sql)) {
-                                                    ?>
-                                                    <option value="<?= $row['eid'] ?>" selected><?= $row['name'] ?> (<?=
-                                                             $row['email'] ?>)</option>
-                                                    <?php
+                           <!-- TLM -->
+                           <?php if($_SESSION['type']==1) {?>
+                                <div class="form-group">
+                                <label for="userType">Third Line Manager</label>
+                            <div class="input-group">   
+                                    <div class="input-group-addon"><i class="icon-user"></i></div>
+                                <select style="margin-left:12px;" class="form-control" id="Tlm"  onchange="getAdmin(this,'Slm')"  data-style="form-control" name="type" required="true">
+                                <option value="select" selected disabled>select</option>          
+                                            <?php 
+                                            $parentId=$_SESSION['id'];
+                                            if($_SESSION['type']==1){
+                                                $sql = "SELECT * FROM `admin` WHERE type = '2' and parentId=$parentId ";
+                                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
+                                                if (mysqli_num_rows($res) > 0) {
+                                                    while ($row = mysqli_fetch_assoc($res)) {
+                                                        $name = $row['name'];
+                                                        $id = $row['id'];
+                                                        $email = $row['email'];
+                                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                                    }
+                                                } else {
+                                                    echo `<option value="select">error</option> `;
                                                 }
-
-
-                                            } else if (isset($_SESSION['id'])) {
-                                                $admin = $_SESSION['id'];
-                                                $sql .= " WHERE flm=$admin or gm=$admin or  slm=$admin or tlm=$admin  ";
-
-                                                $sql = mysqli_query($conn, $sql);
-                                                while ($row = mysqli_fetch_array($sql)) {
-                                                    ?>
-                                                        <option value="<?= $row['eid'] ?>"><?= $row['name'] ?> (<?= $row['email'] ?>)</option>
-                                                    <?php
+                                            }
+                                            ?>
+                                        </select> 
+                                </div>
+                            </div>  
+                           <?php  }?>
+                            <!-- SLM -->
+                           <?php if($_SESSION['type']==1||$_SESSION['type']==2) {?>
+                                <div class="form-group">
+                                <label for="userType">Second Line Manager</label>
+                            <div class="input-group">   
+                                    <div class="input-group-addon"><i class="icon-user"></i></div>
+                                    <select style="margin-left:12px;" class="form-control" id="Slm" onchange="getAdmin(this,'Flm')"  data-style="form-control" name="type" required="true">
+                                    <option value="select" selected disabled>select</option>          
+                                    <?php 
+                                            if($_SESSION['type']==2){ 
+                                            $parentId=$_SESSION['id'];
+                                                $sql = "SELECT * FROM `admin` WHERE type = '3' and parentId=$parentId ";
+                                                $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
+                                                if (mysqli_num_rows($res) > 0) {
+                                                    while ($row = mysqli_fetch_assoc($res)) {
+                                                        $name = $row['name'];
+                                                        $id = $row['id'];
+                                                        $email = $row['email'];
+                                                        echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                                    }
+                                                } else {
+                                                    echo `<option value="select">error</option> `;
                                                 }
-
                                             }
-
-
+                                          
                                             ?>
-                                        </select>
-                                    </div>
-                                </div>
-                          <div class="form-group">
-                                    <label for="place_return_to" >Choose FLM </label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="icon-user"></i></div>
-                                        <select class="form-control"   onchange="getManager(this)">
-                                            <option value="" selected disabled>select</option>
-                                            <?php
-                                            $sql = "SELECT * FROM `sale_executive`  ";
-                                            if (isset($_SESSION['eid'])) {
-                                                $exID = $_SESSION['eid'];
-                                                $sql .= " WHERE  eid=$exID"; 
-                                                $sql = mysqli_query($conn, $sql);
-                                                while ($row = mysqli_fetch_array($sql)) {
-                                                    ?>
-                                                    <option value="<?= $row['eid'] ?>" selected><?= $row['name'] ?> (<?=
-                                                             $row['email'] ?>)</option>
-                                                    <?php
-                                                } 
-                                            } else if (isset($_SESSION['id'])) {
-                                                $admin = $_SESSION['id'];
-                                                $sql .= " WHERE flm=$admin or gm=$admin or  slm=$admin or tlm=$admin  ";
-
-                                                $sql = mysqli_query($conn, $sql);
-                                                while ($row = mysqli_fetch_array($sql)) {
-                                                    ?>
-                                                        <option value="<?= $row['eid'] ?>"><?= $row['name'] ?> (<?= $row['email'] ?>)</option>
-                                                    <?php
-                                                } 
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                         <div class="form-group">
+                                        </select> 
+                        </div>
+                        </div>
+                           <?php  }?>
+                           <?php if($_SESSION['type']==1||$_SESSION['type']==2||$_SESSION['type']==3) {?>
+                        <!-- FLM -->
+                                 <div class="form-group">
+                                <label for="userType">First Line Manager</label>
+                                    <div class="input-group">   
+                                                    <div class="input-group-addon"><i class="icon-user"></i></div>
+                                            <select style="margin-left:12px;" class="form-control" id="Flm"  onchange="getExecutive(this.value)"  data-style="form-control" name="type" required="true">
+                                            <option value="select" selected disabled>select</option>          
+                                                         <?php
+                                                        if($_SESSION['type']==3){ 
+                                                        $parentId=$_SESSION['id'];
+                                                            $sql = "SELECT * FROM `admin` WHERE type = '4' and parentId=$parentId ";
+                                                            $res = mysqli_query($conn, $sql) or die("<srcipt> alert()</srcipt>"); 
+                                                            if (mysqli_num_rows($res) > 0) {
+                                                                while ($row = mysqli_fetch_assoc($res)) {
+                                                                    $name = $row['name'];
+                                                                    $id = $row['id'];
+                                                                    $email = $row['email'];
+                                                                    echo "<option value=" . $id . ">" . $name . "&nbsp&nbsp&nbsp(" . $email . ")</option>";
+                                                                }
+                                                            } else {
+                                                                echo `<option value="select">error</option> `;
+                                                            }
+                                                        }
+                                                         ?>
+                                                        </select> 
+                                        </div>
+                        </div>
+                          <?php  }?> 
+                        <!-- SLM -->
+                                <div class="form-group">
                                     <label for="place_return_to">Select Executive </label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="icon-user"></i></div>
@@ -131,26 +121,26 @@
                                             if (isset($_SESSION['eid'])) {
                                                 $exID = $_SESSION['eid'];
                                                 $sql .= " WHERE  eid=$exID";
-
                                                 $sql = mysqli_query($conn, $sql);
                                                 while ($row = mysqli_fetch_array($sql)) {
                                                     ?>
                                                     <option value="<?= $row['eid'] ?>" selected><?= $row['name'] ?> (<?=
                                                              $row['email'] ?>)</option>
                                                     <?php
-                                                }
-
-
+                                                } 
                                             } else if (isset($_SESSION['id'])) {
                                                 $admin = $_SESSION['id'];
-                                                $sql .= " WHERE flm=$admin or gm=$admin or  slm=$admin or tlm=$admin  ";
-
-                                                $sql = mysqli_query($conn, $sql);
-                                                while ($row = mysqli_fetch_array($sql)) {
-                                                    ?>
+                                                if($_SESSION['type']==4){
+                                                    $sql .= " WHERE flm=$admin   ";
+                                                    echo $sql;
+                                                     $sql = mysqli_query($conn, $sql);
+                                                    while ($row = mysqli_fetch_array($sql)) {
+                                                        ?>
                                                         <option value="<?= $row['eid'] ?>"><?= $row['name'] ?> (<?= $row['email'] ?>)</option>
-                                                    <?php
+                                                        <?php
+                                                    }
                                                 }
+                                               
 
                                             }
 
@@ -184,9 +174,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-
-
                                 <div class="form-group">
                                     <label for="city">City From </label>
                                     <div class="input-group">
@@ -196,7 +183,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="city">City To </label>
                                     <div class="input-group">
@@ -206,7 +192,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="place_return_to">City Return To </label>
                                     <div class="input-group">
@@ -216,8 +201,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label for="city">Tahasil </label>
                                     <div class="input-group">
@@ -244,7 +227,6 @@
                                     </div>
 
                                 </div>
-
                                 <div class="form-group">
                                     <label for="remarks">Tour Remarks</label>
                                     <div class="input-group">
@@ -254,8 +236,7 @@
                                     </div>
 
                                 </div>
-                                <div class="row">
-
+                           <div class="row"> 
                                     <label for="exampleInputuname">Doctors</label>
                                     <table id="tabdoctor" class="table color-table primary-table">
                                         <thead>
@@ -275,7 +256,6 @@
 
                                         </tbody>
                                     </table>
-
                                     <label for="exampleInputuname">Chemist</label>
                                     <table id="tabchemist" class="table color-table primary-table">
                                         <thead>
@@ -297,7 +277,7 @@
                                             class="btn btn-success waves-effect waves-light m-r-10">Submit Tour
                                             Plan</button>
                                     </div>
-
+                          </div>
                             </form>
 
 
@@ -627,4 +607,58 @@
             // $('#tabdoctor').DataTable(); 
     }
 
+    function getAdmin(evt,element){
+ 
+ parentId=evt.value;
+ let xhr=new XMLHttpRequest();
+     xhr.open('POST','server/api.php');
+     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+     req = "callApi=" + JSON.stringify({ "table": "getAdmin", parentId });
+      xhr.send(req); 
+      xhr.onreadystatechange = function()
+               {
+                 if (xhr.readyState == 4 && xhr.status == 200)
+                 { 
+                     var data = JSON.parse(xhr.response); 
+                     $("#"+element).empty();
+                     $("#"+element).append(`<option selected disabled>select</option>`)
+                     for (key in data) {
+                         $("#"+element).append(`<option value='${data[key].id}'>${data[key].name} (${data[key].phone})</option>`)
+                     }
+                 }
+               };  
+     xhr.onprogress = function(event) {
+         // alert("on progress");
+     };
+     xhr.onerror = function() {
+       alert("Request failed");
+     };
+}
+
+
+function getExecutive(parentId){  
+ let xhr=new XMLHttpRequest();
+     xhr.open('POST','server/api.php');
+     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+     req = "callApi=" + JSON.stringify({ "table": "getExecutive", parentId });
+      xhr.send(req); 
+      xhr.onreadystatechange = function()
+               {
+                 if (xhr.readyState == 4 && xhr.status == 200)
+                 { 
+                     var data = JSON.parse(xhr.response); 
+                     $("#eID").empty();
+                     $("#eID").append(`<option selected disabled>select</option>`)
+                     for (key in data) {
+                         $("#eID").append(`<option value='${data[key].id}'>${data[key].name} (${data[key].phone})</option>`)
+                     }
+                 }
+               };  
+     xhr.onprogress = function(event) {
+         // alert("on progress");
+     };
+     xhr.onerror = function() {
+       alert("Request failed");
+     };
+}
 </script>

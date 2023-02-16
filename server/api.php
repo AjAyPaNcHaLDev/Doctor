@@ -2,14 +2,14 @@
 include "conn.php";
 include("../session.php");
 function getTable($sql)
-{
-    $sql;
+{ 
     $myarray = array();
-    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thing went wrong");
-    while ($row = mysqli_fetch_assoc($data)) {
-        $myarray[] = ($row);
-    }
-
+    if(!empty($sql)){
+        $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thing went wrong");
+        while ($row = mysqli_fetch_assoc($data)) {
+            $myarray[] = ($row);
+        } 
+    } 
     print_r(json_encode($myarray));
 
 }
@@ -20,6 +20,16 @@ if (isset($_POST["callApi"])) {
     $tab = $arr->table;
 
     switch ($tab) {
+         case "getExecutive":
+            $parentId = $arr->parentId;
+            $sql = "SELECT * FROM sale_executive  WHERE flm=$parentId";
+            getTable($sql);
+            break;
+        case "getAdmin":
+            $parentId = $arr->parentId;
+            $sql = "SELECT * FROM admin  WHERE parentId=$parentId";
+            getTable($sql);
+            break;
         case "getExecutiveTable":
             // $join ="SELECT * FROM sale_executive INNER JOIN admin  ON sale_executive.under_asm = admin.id ORDER BY eid DESC";
             $sql = "SELECT * FROM sale_executive   ORDER BY eid DESC";
@@ -59,8 +69,12 @@ if (isset($_POST["callApi"])) {
                     $everyExecutive[] = $row['eid'];
                 }
                 $everyExecutive = implode(",", $everyExecutive);
+                if($everyExecutive){
                 $sql = "SELECT * FROM doctors WHERE type='Chemist' AND eid in ($everyExecutive) ORDER BY id DESC";
                 getTable($sql);
+                }else{
+                    getTable("");
+                }
             } else {
                 $sql = "SELECT * FROM doctors WHERE type='Chemist' ";
                 if (!empty($arr->eid)) {
@@ -87,9 +101,14 @@ if (isset($_POST["callApi"])) {
                 while ($row = mysqli_fetch_assoc($sql)) {
                     $everyExecutive[] = $row['eid'];
                 }
-                $everyExecutive = implode(",", $everyExecutive);
-                $sql = "SELECT * FROM doctors WHERE type='doctor' AND eid in ($everyExecutive) ORDER BY id DESC";
+                 $everyExecutive = implode(",", $everyExecutive);
+                if($everyExecutive){
+                    $sql = "SELECT * FROM doctors WHERE type='doctor' AND eid in ($everyExecutive) ORDER BY id DESC";
                 getTable($sql);
+                }else{
+                    getTable("");
+                }
+               
             } else {
 
                 $sql = "SELECT * FROM doctors WHERE type='doctor' ";
@@ -125,8 +144,13 @@ if (isset($_POST["callApi"])) {
                 $everyExecutive = implode(",", $everyExecutive);
                 $sql .= "AND (eid in ($everyExecutive)   OR admin_id=${id})   ";
             }
+            if($everyExecutive){
+                getTable($sql);
+            }else{
+                 getTable("");
+                }
 
-            getTable($sql);
+            
 
             break;
         case "id_doctor":
@@ -341,7 +365,7 @@ function getWorkInfo($month, $tablefor)
             $sql="SELECT * FROM sale_executive WHERE  flm in ($all_id)";
             $sql=mysqli_query($GLOBALS['conn'],$sql);
             while ($row_query = mysqli_fetch_assoc($sql)) {
-                $arr[]= $row_query['id'];
+                $arr[]= $row_query['eid'];
             } 
             $all_id = implode(",", $arr);
             $sql = "SELECT DISTINCT `eid` ,`role`,`insertby` FROM `tour_plan` WHERE `date_of_visit` like '%$month-%' AND eid IN ($all_id)";

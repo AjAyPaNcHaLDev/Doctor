@@ -72,11 +72,11 @@ include "./header.php"; ?>
                                         <div class="form-group">
                                             <label for="userType">Choose Manager type</label>
 
-                                            <select style="margin-left:12px;" onchange="fetchParent(this.value)"
+                                            <select style="margin-left:12px;" onchange="fetchParent(this)"
                                                 class="selectpicker" id="type" data-style="form-control" name="type"
                                                 required="true">
-                                                <option value="select">select</option>
-                                                <option value="1">General Manager</option>
+                                                <option value="select">select</option> 
+                                                <!-- <option value="1">General  Manager</option> -->
                                                 <option value="2">Third Line Manager</option>
                                                 <option value="3">Second Line Manager</option>
                                                 <option value="4">First Line Manager</option>
@@ -478,9 +478,15 @@ include "./header.php"; ?>
 
 
 
-    function fetchParent(value) {
+    function fetchParent(evnt) {
+
+        if(evnt.value==1){
+            alert("add or update GM not Allowed here.")
+            $(evnt)[0].selectedIndex = 0;
+            return;
+        }
         req = "callApi=" + JSON.stringify({
-            "table": "parent", type: value - 1
+            "table": "parent", type: evnt.value - 1
         });
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'server/api.php', true);
@@ -517,8 +523,10 @@ include "./header.php"; ?>
                 var data = JSON.parse(xhr.response);
                 if (data.error == false) {
                     data = data.data
-
-                    fetchParent(data.type)
+                        d={
+                            value:data.type
+                        }
+                    fetchParent(d)
 
                     setTimeout(() => {
                         $("#name").val(data.name)
