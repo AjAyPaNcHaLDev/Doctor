@@ -273,12 +273,8 @@
                                             }
                                         }
                                     }
-                                    xhr2.send(req2);
-
-                                    //------------>
-
-                                }
-
+                                    xhr2.send(req2);  
+                                } 
                             }
                         } else if (data[0].attendance == 0) {
 

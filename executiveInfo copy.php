@@ -278,7 +278,7 @@
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'server/api.php', true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        req = "callApi=" + JSON.stringify({ "table": "getExecutiveForSales", month });
+        req = "callApi=" + JSON.stringify({ "table": "getWorkInfo", month });
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var data = JSON.parse(xhr.response);

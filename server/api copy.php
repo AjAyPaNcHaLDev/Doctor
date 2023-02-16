@@ -5,7 +5,7 @@ function getTable($sql)
 {
   $sql;
     $myarray = array();
-    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thik went wronge");
+    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thing went wrong");
     while ($row = mysqli_fetch_assoc($data)) {
         $myarray[] = ($row);
     }
@@ -154,11 +154,11 @@ if (isset($_POST["callApi"])) {
             getTable($sql);
 
             break;
-        case "getExecutiveForSales":
+        case "getWorkInfo":
             $month = $arr->month;
             $sql = "SELECT DISTINCT eid FROM `tour_plan` WHERE `date_of_visit` like '%$month-%'";
 
-            getExecutiveForSales($sql, $month);
+            getWorkInfo($sql, $month);
 
             break;
         case "getExecutiveWorkInfo":
@@ -187,7 +187,7 @@ function getExecutive($sql)
 
     $myarray = array();
 
-    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thik went wronge 1");
+    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thing went wrong 1");
     $result = array();
     while ($row = mysqli_fetch_assoc($data)) {
         $row['eid'];
@@ -201,7 +201,7 @@ function getExecutive($sql)
         $row['status'];
         
         $query = "SELECT name as gm_name from admin WHERE id=$gm limit 1";
-        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thik went wronge q1 "); 
+        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thing went wrong q1 "); 
        
         if(mysqli_num_rows($info)>=0) 
           {
@@ -211,7 +211,7 @@ function getExecutive($sql)
            $gm_name ="";
 
         $query = "SELECT name as tlm_name   from admin WHERE id=$tlm limit 1";
-        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thik went wronge q2");
+        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thing went wrong q2");
         if(mysqli_num_rows($info)>0) 
           {
           $tlm_name = mysqli_fetch_assoc($info);
@@ -220,7 +220,7 @@ function getExecutive($sql)
             $tlm_name = "";
 
         $query = "SELECT name as slm_name   from admin WHERE id=$slm limit 1";
-        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thik went wronge q3");
+        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thing went wrong q3");
         if(mysqli_num_rows($info)>0)
           {
        $slm_name = mysqli_fetch_assoc($info);   
@@ -231,7 +231,7 @@ function getExecutive($sql)
        
         
         $query = "SELECT name as flm_name   from admin WHERE id=$flm limit 1";
-        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thik went wronge q4"); 
+        $info = mysqli_query($GLOBALS['conn'], $query) or die("some thing went wrong q4"); 
         if(mysqli_num_rows($info)>0)
           {
        $flm_name = mysqli_fetch_assoc($info);  
@@ -259,17 +259,17 @@ function getExecutive($sql)
 }
 
 
-function getExecutiveForSales($sql, $month)
+function getWorkInfo($sql, $month)
 {
     $myarray = array();
-    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thik went wronge");
+    $data = mysqli_query($GLOBALS['conn'], $sql) or die("some thing went wrong");
     $result = array();
 
     while ($row = mysqli_fetch_assoc($data)) {
 
         $eid = $row['eid'];
         $exQuery = "SELECT * FROM sale_executive WHERE eid=$eid";
-        $exQuery = mysqli_query($GLOBALS['conn'], $exQuery) or die("some thik went wronge exQuery");
+        $exQuery = mysqli_query($GLOBALS['conn'], $exQuery) or die("some thing went wrong exQuery");
         $exQuery = mysqli_fetch_assoc($exQuery);
         // echo $total_day_work=mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT DISTINCT date_of_visit FROM `tour_plan` WHERE `date_of_visit` like '%-09-%' AND eid=6 AND 	attendance=1"));
 
@@ -310,7 +310,7 @@ function getExecutiveWorkInfo($eid, $month)
 {
 
     $myarray = array();
-    $executive_info = mysqli_query($GLOBALS['conn'], "SELECT * FROM sale_executive WHERE eid=$eid") or die("some thik went wronge ff");
+    $executive_info = mysqli_query($GLOBALS['conn'], "SELECT * FROM sale_executive WHERE eid=$eid") or die("some thing went wrong ff");
 
 
     $executive_info = mysqli_fetch_assoc($executive_info);

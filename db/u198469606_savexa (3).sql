@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2023 at 01:46 PM
+-- Generation Time: Feb 16, 2023 at 01:38 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -40,26 +40,25 @@ CREATE TABLE `admin` (
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `day_care` int(11) NOT NULL,
   `tariff_kms` int(11) NOT NULL,
-  `slm` int(11) DEFAULT NULL,
-  `flm` int(11) DEFAULT NULL,
-  `gm` int(11) DEFAULT NULL
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `type`, `parentId`, `name`, `phone`, `email`, `password`, `status`, `date`, `entry_date`, `day_care`, `tariff_kms`, `slm`, `flm`, `gm`) VALUES
-(69, '1', '', 'Yogesh Kumar', '8100600000', 'advocateyogeshgarg@gmail.com', 'Manvir@@123', 'active', '2022-09-15 00:00:00', '2022-09-29 11:34:07', 0, 0, NULL, NULL, NULL),
-(82, '2', '69', 'Anjali', '9619700003', 'anjisingla273@gmail.com', 'Manvir@@123', 'active', '2022-12-28 05:28:31', '2022-12-28 05:28:31', 0, 0, NULL, NULL, NULL),
-(83, '3', '82', 'Sandeep Singh', '9478656123', 'singla273@gmail.com', 'Manvir@@123', 'active', '2022-12-28 05:31:15', '2022-12-28 05:31:15', 0, 0, NULL, NULL, NULL),
-(84, '2', '', 'Jatin singla', '9779336554', 'singlajatin061@gmail.com', 'Captain@123', 'active', '2022-12-28 05:48:40', '2022-12-28 05:48:40', 0, 0, NULL, NULL, NULL),
-(90, '4', '83', 'anuj', '91981239811', 'anju@gmail.com', 'anju@gmail.com', 'active', '2023-02-13 16:13:25', '2023-02-13 10:43:25', 0, 0, NULL, NULL, NULL),
-(91, '2', '69', 'arun', '9012390123', 'arun@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:14:26', '2023-02-13 10:44:26', 0, 0, NULL, NULL, NULL),
-(92, '3', '82', 'moonu', '9012390124', 'moonu@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:05', '2023-02-13 10:45:05', 0, 0, NULL, NULL, NULL),
-(93, '2', '69', 'dinesh', '901239089', 'dinesh@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:28', '2023-02-13 10:45:28', 122, 12, NULL, NULL, NULL),
-(94, '3', '', 'rahu', '901233389', 'rahu@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:54', '2023-02-13 10:45:54', 0, 0, NULL, NULL, NULL),
-(95, '2', '69', 'badsah', '9090881222', 'badsah@gmail.com', 'badsah@gmail.com', 'active', '2023-02-13 17:03:40', '2023-02-13 11:33:40', 100, 100, NULL, NULL, NULL);
+INSERT INTO `admin` (`id`, `type`, `parentId`, `name`, `phone`, `email`, `password`, `status`, `date`, `entry_date`, `day_care`, `tariff_kms`, `city`, `state`) VALUES
+(69, '1', '', 'Yogesh Kumar', '8100600000', 'advocateyogeshgarg@gmail.com', 'Manvir@@123', 'active', '2022-09-15 00:00:00', '2022-09-29 11:34:07', 0, 0, NULL, NULL),
+(82, '2', '69', 'Anjali', '9619700003', 'anjisingla273@gmail.com', 'Manvir@@123', 'active', '2022-12-28 05:28:31', '2022-12-28 05:28:31', 0, 0, NULL, NULL),
+(83, '3', '82', 'Sandeep Singh', '9478656123', 'singla273@gmail.com', 'Manvir@@123', 'active', '2022-12-28 05:31:15', '2022-12-28 05:31:15', 0, 0, NULL, NULL),
+(84, '2', '69', 'Jatin singla', '9779336554', 'singlajatin061@gmail.com', 'Captain@123', 'active', '2022-12-28 05:48:40', '2022-12-28 05:48:40', 0, 0, NULL, NULL),
+(90, '4', '83', 'anuj', '91981239811', 'anju@gmail.com', 'anju@gmail.com', 'active', '2023-02-13 16:13:25', '2023-02-13 10:43:25', 100, 5, NULL, NULL),
+(91, '2', '69', 'arun', '9012390123', 'arun@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:14:26', '2023-02-13 10:44:26', 0, 0, NULL, NULL),
+(92, '4', '83', 'moonu', '9012390124', 'moonu@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:05', '2023-02-13 10:45:05', 0, 0, NULL, NULL),
+(93, '2', '69', 'dinesh', '901239089', 'dinesh@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:28', '2023-02-13 10:45:28', 122, 12, NULL, NULL),
+(94, '3', '82', 'rahu', '901233389', 'rahu@gmail.com', 'arun@gmail.com', 'active', '2023-02-13 16:15:54', '2023-02-13 10:45:54', 0, 0, NULL, NULL),
+(95, '2', '69', 'badsah', '9090881222', 'badsah@gmail.com', 'badsah@gmail.com', 'active', '2023-02-13 17:03:40', '2023-02-13 11:33:40', 100, 100, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -7838,9 +7837,14 @@ CREATE TABLE `tour_plan` (
 --
 
 INSERT INTO `tour_plan` (`id`, `eid`, `admin_id`, `id_doctor`, `date_of_visit`, `place_from`, `place_to`, `place_return_to`, `price`, `attendance`, `attendance_remark`, `doctor_remark`, `remark`, `insertby`, `role`, `entry_date`, `visit_km`, `tahasil`) VALUES
-(144, '40', 69, '84', '2023-02-04', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Yogesh Kumar', 'Manager-69', '2023-02-14 12:05:28', '11', 'Jind'),
-(145, '29', NULL, '79', '2023-02-28', 'JALANDHAR', 'JALANDHAR', '', NULL, '1', 'Persent', 'ok', 'ok', 'Manpreet Singh', 'Executive-29', '2023-02-14 12:06:34', '122', ''),
-(146, '29', NULL, '', '2023-02-14', NULL, NULL, NULL, NULL, '0', '', NULL, NULL, 'Manpreet Singh', 'Executive-29', '2023-02-14 12:07:04', NULL, NULL);
+(144, '40', 69, '84', '2023-02-04', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Yogesh Kumar', 'GM-69', '2023-02-14 12:05:28', '11', 'Jind'),
+(145, '29', NULL, '79', '2023-02-28', 'JALANDHAR', 'JALANDHAR', NULL, NULL, '1', 'Persent', 'ok', 'ok', 'Manpreet Singh', 'SE-29', '2023-02-14 12:06:34', '122', ''),
+(146, '29', NULL, '', '2023-02-14', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, 'Manpreet Singh', 'SE-29', '2023-02-14 12:07:04', NULL, NULL),
+(147, '40', 69, '83', '2023-02-13', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Yogesh Kumar', 'GM-69', '2023-02-15 04:37:55', '10', 'Jind'),
+(148, '40', 69, '84,83', '2023-02-23', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Yogesh Kumar', 'GM-69', '2023-02-15 04:59:14', '11', 'Jind'),
+(149, '40', 69, '82,81', '2023-02-16', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Yogesh Kumar', 'GM-69', '2023-02-15 05:03:52', '10', 'Jind'),
+(150, NULL, 69, '', '2023-02-25', NULL, NULL, NULL, NULL, '0', 'Leave', NULL, NULL, 'Yogesh Kumar', 'GM-69', '2023-02-16 06:11:51', NULL, NULL),
+(151, '40', 82, '82,81', '2023-02-27', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Anjali', 'TLM-82', '2023-02-16 07:17:55', '11', '');
 
 -- --------------------------------------------------------
 
@@ -7962,7 +7966,7 @@ ALTER TABLE `sale_executive`
 -- AUTO_INCREMENT for table `tour_plan`
 --
 ALTER TABLE `tour_plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `user_type`
