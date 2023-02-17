@@ -4,6 +4,7 @@
 
 # Xcode
 #
+./Savexa-pharma.zip
 build/
 *.pbxuser
 !default.pbxuser

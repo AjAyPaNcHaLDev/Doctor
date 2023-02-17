@@ -177,7 +177,7 @@ if (isset($_POST["registerTourPlan"])) {
   
     if (isset($_SESSION['eid'])) {
         $exID = $_SESSION['eid'];
-        $role = "Executive-" . $exID;
+        $role = "SE-" . $exID;
     }else{
         $exID = $arr->exID;
     }
@@ -224,7 +224,7 @@ if (isset($_POST["submitLeave"])) {
 
     if (isset($_SESSION['eid'])) {
         $eid = $_SESSION['eid'];
-        $role = "Executive-" . $eid;
+        $role = "SE-" . $eid;
     } else{
         $eid = "NULL";
     }

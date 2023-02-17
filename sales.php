@@ -26,7 +26,7 @@
                                         $admin_id = "";
                                         if (isset($_SESSION['eid'])) {
                                             $eid = $_SESSION['eid'];
-                                            $role = "Executive-" . $eid;
+                                            $role = "SE-" . $eid;
                                         } else if (isset($_POST['eid'])) {
                                             $eid = $_POST['eid'];
                                         }

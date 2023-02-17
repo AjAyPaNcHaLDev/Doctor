@@ -7769,8 +7769,8 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `eid`, `choosed_date`, `internal_sales`, `external_sales`, `entry_date`, `insertby`, `role`, `update_at`) VALUES
-(63, '29', '2023-02-25', '1234', '1234', '2023-02-12 07:32:25', 'Manpreet Singh', 'Executive-29', '2023-02-12 07:32:25'),
-(64, '40', '2023-02-17', '1234', '1234', '2023-02-13 11:04:56', 'Manvir ', 'Executive-40', '2023-02-13 11:04:56');
+(63, '29', '2023-02-25', '1234', '1234', '2023-02-12 07:32:25', 'Manpreet Singh', 'SE-29', '2023-02-12 07:32:25'),
+(64, '40', '2023-02-17', '1234', '1234', '2023-02-13 11:04:56', 'Manvir ', 'SE-40', '2023-02-13 11:04:56');
 
 -- --------------------------------------------------------
 
@@ -7838,7 +7838,7 @@ CREATE TABLE `tour_plan` (
 --
 
 INSERT INTO `tour_plan` (`id`, `eid`, `admin_id`, `id_doctor`, `date_of_visit`, `place_from`, `place_to`, `place_return_to`, `price`, `attendance`, `attendance_remark`, `doctor_remark`, `remark`, `insertby`, `role`, `entry_date`, `visit_km`, `tahasil`) VALUES
-(152, '40', NULL, '83,82,81', '2023-02-28', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Manvir ', 'Executive-40', '2023-02-16 17:56:57', '10', 'Jind');
+(152, '40', NULL, '83,82,81', '2023-02-28', 'JIND', 'JIND', 'JIND', NULL, '1', 'Persent', 'ok', 'ok', 'Manvir ', 'SE-40', '2023-02-16 17:56:57', '10', 'Jind');
 
 -- --------------------------------------------------------
 
