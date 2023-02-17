@@ -125,8 +125,7 @@ if (isset($_POST["callApi"])) {
                 getTable($sql);
             }
             break;
-        case "getTourPlan":
-
+        case "getTourPlan": 
             $date = $arr->date;
             $sql = "SELECT * FROM tour_plan   WHERE date_of_visit='${date}' ";
             if (isset($_SESSION['eid'])) {
@@ -142,7 +141,7 @@ if (isset($_POST["callApi"])) {
                     $everyExecutive[] = $row['eid'];
                 }
                 $everyExecutive = implode(",", $everyExecutive);
-                $sql .= "AND (eid in ($everyExecutive)   OR admin_id=${id})   ";
+                $sql .= "AND (eid in ($everyExecutive)   OR admin_id=${id}) LIMIT 100  ";
             }
             if($everyExecutive){
                 getTable($sql);
